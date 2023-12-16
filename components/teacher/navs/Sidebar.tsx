@@ -1,19 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-
-import { Icon } from '@iconify/react';
-import { SIDEBAR_ITEMS } from '@/lib/constants';
-import { SideNavItem } from '@/lib/types';
 
 const Sidebar = () => {
   return (
     <div className="custom-scrollbar md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex overflow-y-auto py-2 dark:bg-black/50">
-      <div className="flex flex-col space-y-6 w-full">
+      {/* <div className="flex flex-col space-y-6 w-full">
         <Link
           href="/"
           className="flex flex-row space-x-3 items-center justify-center md:justify-start md:px-6 border-b border-zinc-200 h-12 w-full py-2"
@@ -89,7 +81,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
           {item.icon}
           <span className="font-semibold text-sm flex">{item.title}</span>
         </Link>
-      )}
+      )} */}
     </div>
   );
 };

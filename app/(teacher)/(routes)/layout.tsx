@@ -18,14 +18,14 @@ export default function RootLayout({
 }) {
   return (
     <div className="flex">
-      <Sidebar />
+      {/* <Sidebar />
       <main className="flex-1">
         <MarginWidthWrapper>
           <Navbar />
           <MobileNav />
           <PageWrapper>{children}</PageWrapper>
         </MarginWidthWrapper>
-      </main>
+      </main> */}
     </div>
   );
 }
