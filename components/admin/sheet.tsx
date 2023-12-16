@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { BadgeHelp, ChevronDownIcon, ChevronRightIcon, Info, Mail, Menu } from "lucide-react";
 import Nav from "./Nav";
 
 import React from "react";
@@ -29,15 +29,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+
 
 import { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
@@ -80,7 +72,7 @@ export function MobileNav({ userRole }) {
     {
       title: "School info",
       path: `/admin/${id}/school-info`,
-      icon: <Icon icon="lucide:home" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={Info} />,
       roleField: "schoolInfo",
     },
     {
@@ -174,7 +166,7 @@ export function MobileNav({ userRole }) {
           roleField: "schoolBanner",
           path: `/admin/${id}/frontend-display/school-banners`,
         },
-        // { title: '', path: '/' },
+        
       ],
     },
     {
@@ -184,36 +176,36 @@ export function MobileNav({ userRole }) {
       roleField: "manageUsers",
       submenu: true,
       subMenuItems: [
-        // { title: 'All', path: '/' },
         {
           title: "manage Admins",
           roleField: "manageAdmin",
           path: `/admin/${id}/manage-users/manage-admin`,
         },
-
+       
         {
           title: "manage Teachers",
-          roleField: "manageTeachers",
+          roleField: "manageTeacher",
           path: `/admin/${id}/manage-users/manage-teacher`,
         },
-
+        
         {
           title: "manage Students",
           roleField: "manageStudent",
           path: `/admin/${id}/manage-users/manage-student`,
         },
+        
       ],
     },
     {
       title: "Pro/Transfer Students",
       path: `admin/${id}/transfer-student`,
-      icon: <Icon icon="lucide:mail" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={Mail} />,
       roleField: "transferStudent",
     },
     {
       title: "Manage Attendance",
       path: `/admin/${id}/manage-attendance`,
-      icon: <Icon icon="lucide:help-circle" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={BadgeHelp} />,
       roleField: "manageAttendance",
     },
     {
@@ -315,7 +307,7 @@ export function MobileNav({ userRole }) {
           title: "manage issue Books",
           roleField: "manageIssueBook",
           path: `/admin/${id}/library/manage-issue-books`,
-        },
+        }
       ],
     },
     // {
@@ -385,7 +377,6 @@ export function MobileNav({ userRole }) {
                       open={open === index + 1}
                       icon={
                         <ChevronDownIcon
-                          strokeWidth={2.5}
                           className={`mx-auto h-4 w-4 transition-transform ${
                             open === index + 1 ? "rotate-180" : ""
                           }`}
@@ -414,7 +405,6 @@ export function MobileNav({ userRole }) {
                                 <ListItem key={subIndex}>
                                   <ListItemPrefix>
                                     <ChevronRightIcon
-                                      strokeWidth={3}
                                       className="h-3 w-5"
                                     />
                                   </ListItemPrefix>

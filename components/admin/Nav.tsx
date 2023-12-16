@@ -12,15 +12,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+
 
 import React, { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
@@ -28,14 +20,19 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { RoleColumn, SideNavItem } from "@/lib/types";
 import {
+  BadgeHelp,
   Book,
   ChevronDown,
+  ChevronDownIcon,
+  ChevronRightIcon,
   DollarSign,
   DollarSignIcon,
   Group,
   HelpCircle,
+  Info,
   LayoutDashboard,
   Library,
+  Mail,
   ScreenShare,
   Server,
   TimerOff,
@@ -73,7 +70,7 @@ const Nav = ({ userRole }) => {
     {
       title: "School info",
       path: `/admin/${id}/school-info`,
-      icon: <Icon icon="lucide:home" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={Info} />,
       roleField: "schoolInfo",
     },
     {
@@ -200,13 +197,13 @@ const Nav = ({ userRole }) => {
     {
       title: "Pro/Transfer Students",
       path: `admin/${id}/transfer-student`,
-      icon: <Icon icon="lucide:mail" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={Mail} />,
       roleField: "transferStudent",
     },
     {
       title: "Manage Attendance",
       path: `/admin/${id}/manage-attendance`,
-      icon: <Icon icon="lucide:help-circle" width="16" height="16" />,
+      icon: <IconBadge size="sm" icon={BadgeHelp} />,
       roleField: "manageAttendance",
     },
     {
@@ -370,7 +367,6 @@ const Nav = ({ userRole }) => {
                     open={open === index + 1}
                     icon={
                       <ChevronDownIcon
-                        strokeWidth={2.5}
                         className={`mx-auto h-4 w-4 transition-transform ${
                           open === index + 1 ? "rotate-180" : ""
                         }`}
@@ -399,7 +395,6 @@ const Nav = ({ userRole }) => {
                               <ListItem key={subIndex} className="text-sm">
                                 <ListItemPrefix>
                                   <ChevronRightIcon
-                                    strokeWidth={3}
                                     className="h-3 w-5"
                                   />
                                 </ListItemPrefix>
