@@ -27,6 +27,7 @@ import { DataTable } from "@/components/tables/data-table";
 import { columns } from "./_components/column";
 import { getAllAdmins } from "@/lib/actions/admin.actions";
 
+export const dynamic = "force-dynamic"
 const page = async ({
     params
 }:{
@@ -37,7 +38,7 @@ const page = async ({
     if(!user) redirect("/")
 
     const data = await getAllAdmins();
-    console.log(data)
+   
 
   return (
     <>

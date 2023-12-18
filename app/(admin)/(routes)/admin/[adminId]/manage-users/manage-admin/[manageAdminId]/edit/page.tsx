@@ -1,27 +1,35 @@
-import AdminCreateForm from "@/components/admin/forms/AdminCreateForm";
 import Heading from "@/components/heading/Header";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { currentProfile } from "@/lib/hooks/current-profile";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Home } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import EditAdminForm from "../../_components/EditAdminForm";
 import { redirect } from "next/navigation";
+import { currentProfile } from "@/lib/hooks/current-profile";
+import { fetchAdmin } from "@/lib/actions/fetchadmin.actions";
 
 
-const page = async ({ params }: { params: { adminId: string } }) => {
+const page = async ({
+  params,
+}: {
+  params: { adminId: string; manageAdminId: string };
+}) => {
   const user = await currentProfile();
-  
+
   if (!user) redirect("/");
 
-  const id = params.adminId;
+  const pathId = params.adminId;
+  const id = params.manageAdminId;
+
+  const initialData = await fetchAdmin({id}) || {}
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <Heading title="Add Moderator" description="Create new Moderators and roles" />
+        <Heading title="Update Admin" description="Edit and manage Admin details" />
         <Link
-          href={`/admin/${id}/manage-users/manage-moderator`}
+          href={`/admin/${pathId}/manage-users/manage-admin/${id}`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -30,7 +38,7 @@ const page = async ({ params }: { params: { adminId: string } }) => {
       </div>
       <Separator />
       <div className="pt-4 w-full">
-        <AdminCreateForm />
+        <EditAdminForm initialData={initialData} />
       </div>
     </>
   );

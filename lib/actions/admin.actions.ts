@@ -79,17 +79,10 @@ export async function createAdmin({
 
 
 export async function getAllAdmins(){
-    const token = await getTokenValue();
-    if(!token){
-        console.log("couldnt get token to continue function")
-        return;
-    }
-    const role = token?.role;
-
     await connectToDB();
     try {
 
-        const admins = await Adminuser.find({role})
+        const admins = await Adminuser.find({})
         if(!admins){
             console.log("Cant find admins")
             return 
@@ -99,5 +92,53 @@ export async function getAllAdmins(){
 
     } catch (error:any) {
         console.log("unable to fetch admin users",error)
+    }
+}
+
+
+
+export async function deleteAdmin({ id }: { id: string }) {
+    await connectToDB();
+    try {
+        const admin = await Adminuser.findByIdAndDelete({
+            _id: id
+        })
+        if (!admin) {
+            console.log("admin don't exist");
+            return null; // or throw an error if you want to handle it differently
+        }
+        console.log("delete sucessfully")
+
+        return admin;
+    } catch (error) {
+        console.error("Error deleting admin:", error);
+        throw error; // throw the error to handle it at a higher level if needed
+    }
+
+}
+
+export async function updateAdmin(adminId: string, values: Partial<CreateAdminProps>, path: string) {
+    await connectToDB();
+
+    try {
+        const updatedAdmin = await Adminuser.findByIdAndUpdate(
+            adminId,
+            { $set: values },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedAdmin) {
+            console.log("Adminuser not found");
+            return null;
+        }
+
+        console.log("Update successful");
+
+        revalidatePath(path)
+
+        return updatedAdmin;
+    } catch (error) {
+        console.error("Error updating admin:", error);
+        throw error;
     }
 }

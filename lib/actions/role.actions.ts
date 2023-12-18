@@ -495,6 +495,24 @@ export async function getAllRoles() {
         throw error; // throw the error to handle it at a higher level if needed
     }
 }
+export async function getRolesName() {
+    await connectToDB();
+    try {
+        const roles = await Role.find({}, { displayName: 1, _id: 1 });
+
+
+        if (!roles || roles.length === 0) {
+            console.log("Roles name don't exist");
+            return null; // or throw an error if you want to handle it differently
+        }
+
+        return roles;
+
+    } catch (error) {
+        console.error("Error fetching roles name:", error);
+        throw error; // throw the error to handle it at a higher level if needed
+    }
+}
 
 
 export async function deleteUserRole({ id }: { id: string }) {
@@ -532,8 +550,10 @@ export async function updateRole(roleId: string, values: Partial<CreateRoleProps
         }
 
         console.log("Update successful");
-        return updatedRole;
+
         revalidatePath(path)
+
+        return updatedRole;
     } catch (error) {
         console.error("Error updating role:", error);
         throw error;

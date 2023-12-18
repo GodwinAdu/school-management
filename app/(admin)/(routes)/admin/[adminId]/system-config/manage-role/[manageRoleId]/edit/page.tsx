@@ -18,6 +18,7 @@ const page = async ({ params }: { params: { manageRoleId: string } }) => {
         redirect("/")
     }
     const id = params.manageRoleId;
+    const path = params.adminId;
 
     console.log(id)
 
@@ -34,7 +35,7 @@ const page = async ({ params }: { params: { manageRoleId: string } }) => {
         />
 
         <Link
-          href={`/admin/${id}/system-config/manage-role`}
+          href={`/admin/${path}/system-config/manage-role`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

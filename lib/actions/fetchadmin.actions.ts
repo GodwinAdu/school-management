@@ -16,6 +16,7 @@ export async function fetchAdmin({id}:FetchAdminProps){
             console.log("user doesnt exist")
             return null
         }
+        
        // Exclude sensitive information like password
     const { password, ...userWithoutPassword } = user.toObject();
     return userWithoutPassword;

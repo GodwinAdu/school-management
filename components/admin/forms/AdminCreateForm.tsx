@@ -41,7 +41,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { createAdmin } from "@/lib/actions/admin.actions";
 
-const AdminCreateForm = () => {
+const AdminCreateForm = ({rolename}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -154,9 +154,10 @@ const AdminCreateForm = () => {
   };
 
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-  const items = [];
+  
+  const items = rolename;
   const formattedItems = items?.map((item) => ({
-    label: item.name,
+    label: item.displayName,
     value: item._id,
   }));
 
@@ -443,67 +444,26 @@ const AdminCreateForm = () => {
       )}
       {activeStep === 2 && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-          <div className=" w-full flex flex-col gap-2">
-            <Label className="font-bold " htmlFor="Role">
-              Role
-            </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  role="combobox"
-                  aria-expanded={open}
-                  className={cn("w-full justify-between")}
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  User role
-                  <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[200px] p-0">
-                <Command>
-                  <CommandInput placeholder="Search store..." />
-                  <CommandEmpty>No store found.</CommandEmpty>
-                  <CommandGroup heading="Stores">
-                    {formattedItems?.map((store) => (
-                      <CommandItem
-                        key={store.value}
-                        value={store.value}
-                        onSelect={() => onSelectStore(store)}
-                        className="text-sm"
-                      >
-                        <User className="mr-2 h-4 w-4" />
-                        {store.label}
-                        <Check
-                          className={cn(
-                            "ml-auto h-4 w-4",
-                            currentStore?.value === store?.value
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                  <CommandSeparator />
-                  <CommandList>
-                    <CommandGroup>
-                      <CommandItem
-                        onSelect={() => {
-                          setOpen(false);
-                          //   storeModal.onOpen();
-                        }}
-                      >
-                        <PlusCircle className="mr-2 h-5 w-5" />
-                        Create Role
-                      </CommandItem>
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
+           <div className=" w-full flex flex-col gap-2">
+              <Label className="font-bold " htmlFor="gender">
+                Role
+              </Label>
+              <Select
+                value={formData.role}
+                onValueChange={(onValueChange) =>
+                  handleInputChange("role", onValueChange)
+                }
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="role" />
+                </SelectTrigger>
+                <SelectContent>
+                 {rolename?.map((role)=>(
+                  <SelectItem key={role._id} value={role.displayName}>{role.displayName}</SelectItem>
+                 ))}
+                </SelectContent>
+              </Select>
+            </div>
           <div className=" w-full flex flex-col gap-2">
             <Label className="font-bold " htmlFor="picture">
               Amount pay
