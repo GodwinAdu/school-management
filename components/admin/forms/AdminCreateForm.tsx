@@ -24,15 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
+
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
@@ -40,8 +32,14 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { createAdmin } from "@/lib/actions/admin.actions";
+import { ObjectId } from "mongoose";
 
-const AdminCreateForm = ({rolename}) => {
+interface RolenameProps {
+  _id: ObjectId;
+  displayName: string;
+}
+
+const AdminCreateForm = ({ rolename }: RolenameProps[]) => {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -68,6 +66,14 @@ const AdminCreateForm = ({rolename}) => {
     city: "",
     permanentAddress: "",
     currentAddress: "",
+    kin: "",
+    kinPhone: "",
+    kinRelationship: "",
+    idCard: "",
+    occupation: "",
+    accountType: "",
+    accountName: "",
+    accountNumber: "",
   });
 
   const params = useParams();
@@ -141,12 +147,22 @@ const AdminCreateForm = ({rolename}) => {
           !!formData.country &&
           !!formData.state &&
           !!formData.city &&
-          !!formData.currentAddress
+          !!formData.currentAddress &&
+          !!formData.kin &&
+          !!formData.kinPhone &&
+          !!formData.kinRelationship
         );
 
       case 2:
-        // Check if all fields for step 2 are filled
-        return !!formData.role;
+        // Check if all fields for step 4 are filled
+        return (
+          !!formData.role &&
+          !!formData.idCard &&
+          !!formData.occupation &&
+          !!formData.accountType &&
+          !!formData.accountName &&
+          !!formData.accountNumber
+        );
 
       default:
         return false;
@@ -154,62 +170,11 @@ const AdminCreateForm = ({rolename}) => {
   };
 
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-  
-  const items = rolename;
-  const formattedItems = items?.map((item) => ({
-    label: item.displayName,
-    value: item._id,
-  }));
-
-  const currentStore = formattedItems?.find(
-    (item) => item.value === params.adminId
-  );
-
-  const onSelectStore = (store: { value: string; label: string }) => {
-    // setOpen(false);
-    // router.push(`/${store.value}`);
-  };
 
   const handleCreateAdmin = async () => {
-    const {
-      firstName,
-      userName,
-      password,
-      middleName,
-      lastName,
-      email,
-      dob,
-      gender,
-      phone,
-      role,
-      maritalStatus,
-      country,
-      state,
-      city,
-      permanentAddress,
-      currentAddress,
-    } = formData;
     try {
       setIsLoading(true);
-      await createAdmin({
-        firstName,
-        userName,
-        password,
-        middleName,
-        lastName,
-        email,
-        dob,
-        gender,
-        phone,
-        role,
-        maritalStatus,
-        country,
-        state,
-        city,
-        permanentAddress,
-        currentAddress,
-        path,
-      });
+      await createAdmin(formData, path);
       router.push(`/admin/${params.adminId}/manage-users/manage-admin`);
       toast({
         title: "Created sucessfully",
@@ -239,14 +204,14 @@ const AdminCreateForm = ({rolename}) => {
         <Step onClick={() => setActiveStep(1)}>
           <CogIcon className="h-5 w-5" />
         </Step>
-        <Step onClick={() => setActiveStep(2)}>
+        <Step onClick={() => setActiveStep(4)}>
           <Check className="h-5 w-5" />
         </Step>
       </Stepper>
       {activeStep === 0 && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
-            <div className=" w-full flex flex-col gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3  gap-4 py-4">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="name">
                 User Name
               </Label>
@@ -257,7 +222,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("userName", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="name">
                 First Name
               </Label>
@@ -268,7 +233,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("firstName", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="middle name">
                 Middle Name
               </Label>
@@ -281,7 +246,7 @@ const AdminCreateForm = ({rolename}) => {
                 }
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="last name">
                 Last Name
               </Label>
@@ -292,7 +257,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("lastName", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="email">
                 Email
               </Label>
@@ -303,7 +268,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("email", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="phone">
                 Phone
               </Label>
@@ -314,7 +279,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("phone", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="phone">
                 Password
               </Label>
@@ -325,7 +290,7 @@ const AdminCreateForm = ({rolename}) => {
                 onChange={(e) => handleInputChange("password", e.target.value)}
               />
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="gender">
                 gender
               </Label>
@@ -345,7 +310,7 @@ const AdminCreateForm = ({rolename}) => {
                 </SelectContent>
               </Select>
             </div>
-            <div className=" w-full flex flex-col gap-2">
+            <div className=" w-full flex flex-col gap-4">
               <Label className="font-bold " htmlFor="last name">
                 Date of Birth
               </Label>
@@ -368,7 +333,6 @@ const AdminCreateForm = ({rolename}) => {
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
-                    mode="single"
                     selected={formData.dob}
                     onSelect={(date) => handleInputChange("dob", date)}
                     initialFocus
@@ -380,8 +344,8 @@ const AdminCreateForm = ({rolename}) => {
         </>
       )}
       {activeStep === 1 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-          <div className=" w-full flex flex-col gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-4 py-4">
+          <div className=" w-full flex flex-col gap-4">
             <Label className="font-bold " htmlFor="country">
               Country
             </Label>
@@ -392,7 +356,7 @@ const AdminCreateForm = ({rolename}) => {
               onChange={(e) => handleInputChange("country", e.target.value)}
             />
           </div>
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-4">
             <Label className="font-bold " htmlFor="state">
               State
             </Label>
@@ -403,7 +367,7 @@ const AdminCreateForm = ({rolename}) => {
               onChange={(e) => handleInputChange("state", e.target.value)}
             />
           </div>
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-4">
             <Label className="font-bold " htmlFor="city">
               City
             </Label>
@@ -414,7 +378,7 @@ const AdminCreateForm = ({rolename}) => {
               onChange={(e) => handleInputChange("city", e.target.value)}
             />
           </div>
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-4">
             <Label className="font-bold " htmlFor="currentAddress">
               Current Address
             </Label>
@@ -427,7 +391,7 @@ const AdminCreateForm = ({rolename}) => {
               }
             />
           </div>
-          <div className=" w-full flex flex-col gap-2">
+          <div className=" w-full flex flex-col gap-4">
             <Label className="font-bold " htmlFor="permanentAddress">
               Permanent Address
             </Label>
@@ -440,50 +404,152 @@ const AdminCreateForm = ({rolename}) => {
               }
             />
           </div>
-        </div>
-      )}
-      {activeStep === 2 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-           <div className=" w-full flex flex-col gap-2">
-              <Label className="font-bold " htmlFor="gender">
-                Role
+          <div className=" w-full flex flex-col gap-4">
+              <Label className="font-bold " htmlFor="marital status">
+                Marital Status
               </Label>
               <Select
-                value={formData.role}
+                value={formData.maritalStatus}
                 onValueChange={(onValueChange) =>
-                  handleInputChange("role", onValueChange)
+                  handleInputChange("maritalStatus", onValueChange)
                 }
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="role" />
+                  <SelectValue placeholder="maritalStatus" />
                 </SelectTrigger>
                 <SelectContent>
-                 {rolename?.map((role)=>(
-                  <SelectItem key={role._id} value={role.displayName}>{role.displayName}</SelectItem>
-                 ))}
+                  <SelectItem value="not defined">Not defined</SelectItem>
+                  <SelectItem value="single">Single</SelectItem>
+                  <SelectItem value="married">Married</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-          <div className=" w-full flex flex-col gap-2">
-            <Label className="font-bold " htmlFor="picture">
-              Amount pay
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="permanentAddress">
+              Next of Kin
             </Label>
             <Input
               type="text"
-              placeholder="First Name"
-              value={formData.role} // Add this line
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              placeholder="Enter Next of kin full name"
+              value={formData.kin} // Add this line
+              onChange={(e) => handleInputChange("kin", e.target.value)}
             />
           </div>
-          {/* <div className=" w-fflex flex-col gap-2ull ">
-            <Label className="font-bold " htmlFor="picture">Picture</Label>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="permanentAddress">
+              Next of Kin Phone No.
+            </Label>
             <Input
               type="text"
-              placeholder="First Name"
-              value={formData.firstName} // Add this line
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              placeholder="Enter Next of kin phone number"
+              value={formData.kinPhone} // Add this line
+              onChange={(e) => handleInputChange("kinPhone", e.target.value)}
             />
-          </div> */}
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="permanentAddress">
+              Relationship to Next of Kin
+            </Label>
+            <Input
+              type="text"
+              placeholder="Enter Relationship to Next of kin"
+              value={formData.kinRelationship} // Add this line
+              onChange={(e) =>
+                handleInputChange("kinRelationship", e.target.value)
+              }
+            />
+          </div>
+        </div>
+      )}
+      {activeStep === 2 && (
+        <div className="grid grid-cols-1 md:grid-cols-3  gap-4 py-4">
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="gender">
+              Role
+            </Label>
+            <Select
+              value={formData.role}
+              onValueChange={(onValueChange) =>
+                handleInputChange("role", onValueChange)
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select Role" />
+              </SelectTrigger>
+              <SelectContent>
+                {rolename?.map((role) => (
+                  <SelectItem key={role._id} value={role.displayName}>
+                    {role.displayName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="picture">
+              ID card Number
+            </Label>
+            <Input
+              type="text"
+              placeholder="Enter ID Number"
+              value={formData.idCard} // Add this line
+              onChange={(e) => handleInputChange("idCard", e.target.value)}
+            />
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="picture">
+              Occupation
+            </Label>
+            <Input
+              type="text"
+              placeholder="Enter occupation"
+              value={formData.occupation} // Add this line
+              onChange={(e) => handleInputChange("occupation", e.target.value)}
+            />
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="Account type">
+              Select Account Type
+            </Label>
+            <Select
+              value={formData.accountType}
+              onValueChange={(onValueChange) =>
+                handleInputChange("accountType", onValueChange)
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Choose Account type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="bank">Bank</SelectItem>
+                <SelectItem value="mobile Money">Mobile Money</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="picture">
+              Account Name
+            </Label>
+            <Input
+              type="text"
+              placeholder="Enter Account Name"
+              value={formData.accountName} // Add this line
+              onChange={(e) => handleInputChange("accountName", e.target.value)}
+            />
+          </div>
+          <div className=" w-full flex flex-col gap-4">
+            <Label className="font-bold " htmlFor="picture">
+              Account Number
+            </Label>
+            <Input
+              type="text"
+              placeholder="Enter Account Number"
+              value={formData.accountNumber} // Add this line
+              onChange={(e) =>
+                handleInputChange("accountNumber", e.target.value)
+              }
+            />
+          </div>
         </div>
       )}
       <div className="mt-16 flex justify-between">
@@ -492,8 +558,12 @@ const AdminCreateForm = ({rolename}) => {
         </Button>
 
         {isLastStep ? (
-          <Button onClick={handleCreateAdmin} disabled={isLoading}>
-            Create Admin
+          <Button
+            onClick={handleCreateAdmin}
+            disabled={isLoading}
+            disabled={isLoading || !validateStep(2)}
+          >
+            {isLoading ? "Creating ..." : " Create Admin"}
           </Button>
         ) : (
           <Button onClick={handleNext} disabled={isLastStep}>

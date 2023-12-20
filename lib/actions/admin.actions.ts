@@ -7,12 +7,12 @@ import { getTokenValue } from "@/lib/hooks/getTokenValue"
 import { revalidatePath } from "next/cache";
 
 
-interface CreateAdminProps{
-    firstName:string;
-    userName:string;
-    password:string;
-    middleName?:string;
-    lastName:string;
+interface CreateAdminProps {
+    firstName: string;
+    userName: string;
+    password: string;
+    middleName?: string;
+    lastName: string;
     email: string;
     dob: Date, // Initialize dob as a Date,
     gender: string;
@@ -20,78 +20,75 @@ interface CreateAdminProps{
     role: string;
     maritalStatus: string;
     country: string;
-    state:string;
-    city:string;
-    permanentAddress:string;
+    state: string;
+    city: string;
+    permanentAddress: string;
     currentAddress?: string;
-    path:string
+    kin: string;
+    kinPhone: string;
+    kinRelationship: string;
+    idCard: string;
+    occupation: string;
+    accountType: string;
+    accountName: string;
+    accountNumber: string;
 }
-export async function createAdmin({
-    firstName,
-    userName,
-    password,
-    middleName,
-    lastName,
-    email,
-    dob,
-    gender,
-    phone,
-    role,
-    maritalStatus,
-    country,
-    state,
-    city,
-    permanentAddress,
-    currentAddress,
-    path
-}:CreateAdminProps){
+export async function createAdmin(formData: CreateAdminProps, path: string) {
     await connectToDB();
     try {
-        const hashedPassword =  await hash(password, 10);
+        const hashedPassword = await hash(formData.password, 10);
 
         const admin = new Adminuser({
-            firstName,
-            userName,
-            password:hashedPassword,
-            middleName:middleName ?? "",
-            lastName,
-            email,
-            dob,
-            gender,
-            phone,
-            role:role ||"admin",
-            maritalStatus:maritalStatus ||"single",
-            country,
-            state,
-            city,
-            permanentAddress:permanentAddress || "suame",
-            currentAddress
+            firstName: formData.firstName,
+            userName: formData.userName,
+            password: hashedPassword,
+            middleName: formData.middleName ?? "",
+            lastName: formData.lastName,
+            email: formData.email,
+            dob: formData.dob,
+            gender: formData.gender,
+            phone: formData.phone,
+            role: formData.role,
+            maritalStatus: formData.maritalStatus,
+            country: formData.country,
+            state: formData.state,
+            city: formData.city,
+            permanentAddress: formData.permanentAddress,
+            currentAddress: formData.currentAddress || "",
+            kin: formData.kin,
+            kinPhone: formData.kinPhone,
+            kinRelationship: formData.kinRelationship,
+            idCard: formData.idCard,
+            occupation: formData.occupation,
+            accountType: formData.accountType,
+            accountName: formData.accountName,
+            accountNumber: formData.accountNumber,
         })
 
         await admin.save();
         revalidatePath(path);
-        
-    } catch (error:any) {
-        console.log("something went wrong",error)
+
+    } catch (error: any) {
+        console.log("something went wrong", error)
     }
 }
 
 
 
-export async function getAllAdmins(){
+export async function getAllAdmins() {
     await connectToDB();
     try {
 
         const admins = await Adminuser.find({})
-        if(!admins){
+        if (!admins) {
             console.log("Cant find admins")
-            return 
+            return
         }
 
         return admins;
 
-    } catch (error:any) {
-        console.log("unable to fetch admin users",error)
+    } catch (error: any) {
+        console.log("unable to fetch admin users", error)
     }
 }
 

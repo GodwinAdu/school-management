@@ -17,8 +17,8 @@ const page = async () => {
   return (
     <>
      <div className="flex justify-between items-center">
-      <Heading title="Manage Teachers" description="Manage,edit and control all the teachers in the institution." />
-      <Link href={`manage-teacher/create`} className={cn(buttonVariants())} >
+      <Heading title="Manage Employees" description="Manage,edit and control all the employees in the institution." />
+      <Link href={`manage-employee/create`} className={cn(buttonVariants())} >
         <PlusCircle className="w-4 h-4 mr-2" />
         Add 
       </Link>

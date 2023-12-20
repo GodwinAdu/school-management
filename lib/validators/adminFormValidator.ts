@@ -2,6 +2,9 @@ import * as z from "zod"
 
 export const AdminFormSchema = z.object({
 
+    userName: z.string().min(2,{
+        message:"first name is require"
+    }),
     firstName: z.string().min(2,{
         message:"first name is require"
     }),
@@ -37,5 +40,29 @@ export const AdminFormSchema = z.object({
     permanentAddress: z.string().optional().or(z.literal('')),
     currentAddress: z.string().min(2,{
         message:"current address is require"
-    })
+    }),
+    kin:z.string().min(2,{
+        message:"current address is require"
+    }),
+    kinPhone:z.string().min(2,{
+        message:"current address is require"
+    }),
+    kinRelationship:z.string().min(2,{
+        message:"current address is require"
+    }),
+    idCard:z.string().min(2,{
+        message:"current address is require"
+    }),
+    occupation:z.string().min(2,{
+        message:"current address is require"
+    }),
+    accountType:z.string().min(2,{
+        message:"current address is require"
+    }),
+    accountName:z.string().min(2,{
+        message:"current address is require"
+    }),
+    accountNumber:z.string().min(2,{
+        message:"current address is require"
+    }),
 })

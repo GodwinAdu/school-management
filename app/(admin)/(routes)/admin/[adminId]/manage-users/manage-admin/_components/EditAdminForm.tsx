@@ -41,7 +41,7 @@ const EditAdminForm = ({initialData}) => {
     defaultValues: initialData
   });
 
-  const adminId:string | string[] = params.manageAdminId;
+  const adminId:string = params.manageAdminId;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof AdminFormSchema>) {
@@ -230,7 +230,7 @@ const EditAdminForm = ({initialData}) => {
           />
           <FormField
             control={form.control}
-            name="curentAddress"
+            name="currentAddress"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Current Address</FormLabel>
@@ -256,12 +256,127 @@ const EditAdminForm = ({initialData}) => {
           />
           <FormField
             control={form.control}
+            name="kin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Next of Kin</FormLabel>
+                <FormControl>
+                  <Input placeholder="Name of Next of Kin" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="kinPhone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Next of Kin Phone No</FormLabel>
+                <FormControl>
+                  <Input placeholder="Next of Kin phone Number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="kinRelationship"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Next of Kin Relationship No</FormLabel>
+                <FormControl>
+                  <Input placeholder="Next of Kin Relationship Number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="role"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <FormControl>
                   <Input placeholder="Role" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="idCard"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ID Card Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="ID card number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="occupation"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Occupation</FormLabel>
+                <FormControl>
+                  <Input placeholder="occupation" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="accountType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Account Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a verified email to display" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="bank">Bank</SelectItem>
+                    <SelectItem value="mobile money">Mobile Money</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="accountName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Account Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Account Name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="accountNumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Account Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Account Number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
