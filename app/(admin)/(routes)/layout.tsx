@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SideNav from "@/components/admin/SideNav";
 import { NavbarSticky } from "@/components/navbar/Navbar";
+import { Setting } from "@/components/settings/Settings";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -22,6 +23,7 @@ export default function RootLayout({
           <NavbarSticky />
 
           {/* Main Content */}
+          <Setting />
           <main className="p-4 flex-grow overflow-y-auto custom-scrollbar">{children}</main>
         </div>
       </div>

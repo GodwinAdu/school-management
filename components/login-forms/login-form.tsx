@@ -50,6 +50,8 @@ const LoginForm = () => {
     },
   });
 
+  const {isSubmitting} = form.formState;
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -58,7 +60,7 @@ const LoginForm = () => {
           title: "Teacher login",
           description: "Friday, February 10, 2023 at 5:57 PM",
         });
-      } else if (values.role === "student") {
+      } else if (values.role === "oter") {
         toast({
           title: "Student login",
           description: "Friday, February 10, 2023 at 5:57 PM",
@@ -155,14 +157,15 @@ const LoginForm = () => {
                     <SelectItem value="liberian">Liberian</SelectItem>
                     <SelectItem value="teacher">Teacher</SelectItem>
                     <SelectItem value="student">Student</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button className="w-full text-center" type="submit">
-            Submit
+          <Button disabled={isSubmitting} className="w-full text-center" type="submit">
+            {isSubmitting ? "Loging in..." : "Log In"}
           </Button>
         </form>
       </Form>

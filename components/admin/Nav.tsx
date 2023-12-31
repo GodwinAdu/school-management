@@ -329,7 +329,7 @@ const Nav = ({ userRole }) => {
 
   const filteredItems = SIDENAV_ITEMS.filter((item) => {
     if (item.roleField && item.roleField !== "help") {
-      return userRole[item.roleField];
+      return userRole && userRole[item?.roleField];
     }
 
     return true;

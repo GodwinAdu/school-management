@@ -1,3 +1,6 @@
+import ShowUsersDashboard from "@/components/admin/ShowUsersDashboard";
+import DateTimeComponent from "@/components/display-time/Timer";
+import Heading from "@/components/heading/Header";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,74 +12,86 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/use-toast";
 import { currentProfile } from "@/lib/hooks/current-profile";
+import { CreditCard, DollarSign, Package } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: { adminId: string } }) => {
   const response = await currentProfile();
-  
+
   if (!response) redirect("/");
-  console.log(response,"dashboard")
 
   return (
-    <div className="md:px-4">
-      <Tabs defaultValue="account" className=" w-full">
-        <TabsList className="grid w-full max-w-lg grid-cols-4">
-          <TabsTrigger value="account">Overview</TabsTrigger>
-          <TabsTrigger value="password">Class</TabsTrigger>
-          <TabsTrigger value="password">Class</TabsTrigger>
-          <TabsTrigger value="password">Class</TabsTrigger>
-        </TabsList>
-        <TabsContent value="account" className="w-ful">
-          <Card>
-            <CardHeader>
-              <CardTitle>Account</CardTitle>
-              <CardDescription>
-                Make changes to your account here. Click save when you're done.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue="Pedro Duarte" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" defaultValue="@peduarte" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save changes</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+    <div className="flex-col px-2 ">
+      <div className="flex-1 space-y-4  pt-2 ">
+        <div className="flex justify-between items-center">
+          <Heading title="Dashboard" description="Overview of your store" />
+          <DateTimeComponent />
+        </div>
+        <Separator />
+        <ShowUsersDashboard />
+        <Separator />
+      </div>
     </div>
+    // <div className="md:px-4">
+    //   <Tabs defaultValue="account" className=" w-full">
+    //     <TabsList className="grid w-full max-w-lg grid-cols-4">
+    //       <TabsTrigger value="account">Overview</TabsTrigger>
+    //       <TabsTrigger value="password">Class</TabsTrigger>
+    //       <TabsTrigger value="password">Class</TabsTrigger>
+    //       <TabsTrigger value="password">Class</TabsTrigger>
+    //     </TabsList>
+    //     <TabsContent value="account" className="w-ful">
+    //       <Card>
+    //         <CardHeader>
+    //           <CardTitle>Account</CardTitle>
+    //           <CardDescription>
+    //             Make changes to your account here. Click save when you're done.
+    //           </CardDescription>
+    //         </CardHeader>
+    //         <CardContent className="space-y-2">
+    //           <div className="space-y-1">
+    //             <Label htmlFor="name">Name</Label>
+    //             <Input id="name" defaultValue="Pedro Duarte" />
+    //           </div>
+    //           <div className="space-y-1">
+    //             <Label htmlFor="username">Username</Label>
+    //             <Input id="username" defaultValue="@peduarte" />
+    //           </div>
+    //         </CardContent>
+    //         <CardFooter>
+    //           <Button>Save changes</Button>
+    //         </CardFooter>
+    //       </Card>
+    //     </TabsContent>
+    //     <TabsContent value="password">
+    //       <Card>
+    //         <CardHeader>
+    //           <CardTitle>Password</CardTitle>
+    //           <CardDescription>
+    //             Change your password here. After saving, you'll be logged out.
+    //           </CardDescription>
+    //         </CardHeader>
+    //         <CardContent className="space-y-2">
+    //           <div className="space-y-1">
+    //             <Label htmlFor="current">Current password</Label>
+    //             <Input id="current" type="password" />
+    //           </div>
+    //           <div className="space-y-1">
+    //             <Label htmlFor="new">New password</Label>
+    //             <Input id="new" type="password" />
+    //           </div>
+    //         </CardContent>
+    //         <CardFooter>
+    //           <Button>Save password</Button>
+    //         </CardFooter>
+    //       </Card>
+    //     </TabsContent>
+    //   </Tabs>
+    // </div>
   );
 };
 

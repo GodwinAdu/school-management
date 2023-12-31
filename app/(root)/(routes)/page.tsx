@@ -1,11 +1,13 @@
-import React from 'react'
+import Banner from "@/components/root/Banner";
+import Newsletter from "@/components/root/Newsletter/Newsletter";
 
 const page = () => {
   return (
-    <div>
-      Home page
-    </div>
-  )
-}
+    <main className="w-full h-full">
+      <Banner />
+      <Newsletter />
+    </main>
+  );
+};
 
-export default page
+export default page;
