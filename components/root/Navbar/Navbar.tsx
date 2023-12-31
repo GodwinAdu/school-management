@@ -3,12 +3,11 @@
 import { Disclosure } from '@headlessui/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
-import { Lock } from 'lucide-react';
+import { Lock, Menu } from 'lucide-react';
 
 
 interface NavigationItem {
@@ -101,7 +100,7 @@ const Navbar = () => {
 
                         {/* SIGNIN DIALOG */}
 
-                        <Link href="/sign-in" className={cn(buttonVariants())}>
+                        <Link href="/sign-in" className={cn(buttonVariants(),"hidden md:block")}>
                           <Lock className="w-4 h-4 mr-2" />  Sign In
                         </Link>
 
@@ -110,7 +109,7 @@ const Navbar = () => {
                         {/* DRAWER ICON */}
 
                         <div className='block lg:hidden'>
-                            <Bars3Icon className="block h-6 w-6" aria-hidden="true" onClick={() => setIsOpen(true)} />
+                            <Menu className="block h-6 w-6" aria-hidden="true" onClick={() => setIsOpen(true)} />
                         </div>
 
                         {/* DRAWER LINKS DATA */}

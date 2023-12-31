@@ -1,5 +1,6 @@
+import { X } from "lucide-react";
 import React, { ReactNode } from "react";
-import { XMarkIcon } from '@heroicons/react/24/outline'
+
 
 interface DrawerProps {
     children: ReactNode;
@@ -33,7 +34,7 @@ const Drawer = ({ children, isOpen, setIsOpen }: DrawerProps) => {
                         onClick={() => {
                             setIsOpen(false);
                         }}
-                    /><XMarkIcon className="block h-6 w-6" onClick={() => {
+                    /><X className="block h-6 w-6" onClick={() => {
                         setIsOpen(false);
                     }} />
                     </header>
