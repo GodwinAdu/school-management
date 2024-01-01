@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { updateDay } from "@/lib/actions/day.actions";
-import { updateTime } from "@/lib/actions/time.actions";
+import { updateHouse } from "@/lib/actions/house.actions";
 
 
 interface EditDayProps {
@@ -32,21 +32,18 @@ const formSchema = z.object({
   name: z.string().min(2, {
     message: "name must be at least 2 characters.",
   }),
-  period: z.string().min(2, {
-    message: "time must be at least 2 characters.",
-  }),
   createdBy: z.string().min(2, {
     message: "name must be at least 2 characters.",
   }),
 });
 
-export function EditTime({ initialData }: EditDayProps) {
+export function EditHouse({ initialData }: EditDayProps) {
 
   const router = useRouter();
   const path = usePathname();
   const params = useParams();
 
-  const timeId : string  = params.timeEditId;
+  const houseId : string  = params.houseEditId;
  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,22 +55,22 @@ export function EditTime({ initialData }: EditDayProps) {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await updateTime(timeId,values, path);
+      await updateHouse(houseId,values, path);
 
-      router.push(`/admin/${params.adminId}/system-config/manage-time`);
+      router.push(`/admin/${params.adminId}/system-config/manage-house`);
 
       form.reset();
 
       toast({
         title: "Update Successfully",
-        description: "Update day  successfully...",
+        description: "Update house  successfully...",
       });
     } catch (error: any) {
 
       console.log("error happened while updating day", error);
       
       toast({
-        title: "Somethin went wrong",
+        title: "Something went wrong",
         description: "Please try again later...",
         variant: "destructive",
       });
@@ -89,22 +86,9 @@ export function EditTime({ initialData }: EditDayProps) {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Enter Level</FormLabel>
+                <FormLabel>Enter House Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Day" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="period"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Enter Period</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter time" {...field} />
+                  <Input placeholder="Enter " {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

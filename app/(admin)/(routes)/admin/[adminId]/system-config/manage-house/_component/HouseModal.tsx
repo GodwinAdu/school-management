@@ -30,45 +30,40 @@ import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { createTime } from "@/lib/actions/time.actions";
+import { createHouse } from "@/lib/actions/house.actions";
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "name must be at least 2 characters.",
   }),
-  period: z.string().min(2, {
-    message: "time must be at least 2 characters.",
-  }),
 });
 
-export function TimeModal() {
+export function HouseModal() {
   const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      period:""
     },
   });
 
-  const { isSubmitting} = form.formState;
+  const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await createTime({
+      await createHouse({
         name: values.name,
-        period:values.time
       });
       router.refresh();
       form.reset();
       toast({
-        title: "New time created",
-        description: "New time session was added successfully...",
+        title: "New house created",
+        description: "New house was added successfully...",
       });
     } catch (error: any) {
-      console.log("error happened while creating time", error);
+      console.log("error happened while creating house", error);
       toast({
         title: "Something went wrong",
         description: "Please try again later...",
@@ -87,8 +82,8 @@ export function TimeModal() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] w-[96%]">
         <DialogHeader>
-          <DialogTitle>Create School Time</DialogTitle>
-          <DialogDescription>Create new School Time .</DialogDescription>
+          <DialogTitle>Create School House</DialogTitle>
+          <DialogDescription>Create new School House .</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <Form {...form}>
@@ -98,26 +93,10 @@ export function TimeModal() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Enter Period</FormLabel>
+                    <FormLabel>Enter House Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Eg. Morning ..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="period"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Enter time</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Eg. 8:30 am - 4:00 pm"
+                        placeholder="Eg. Peasah House"
                         {...field}
                       />
                     </FormControl>

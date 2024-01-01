@@ -60,7 +60,7 @@ const LoginForm = () => {
           title: "Teacher login",
           description: "Friday, February 10, 2023 at 5:57 PM",
         });
-      } else if (values.role === "oter") {
+      } else if (values.role === "student") {
         toast({
           title: "Student login",
           description: "Friday, February 10, 2023 at 5:57 PM",
@@ -71,7 +71,7 @@ const LoginForm = () => {
             userName:values.username,
             password:values.password
           })
-          
+          form.reset();
           if (currentUser) {
             router.push(`/admin/${currentUser._id}`);
             toast({
@@ -165,7 +165,7 @@ const LoginForm = () => {
             )}
           />
           <Button disabled={isSubmitting} className="w-full text-center" type="submit">
-            {isSubmitting ? "Loging in..." : "Log In"}
+            {isSubmitting ? "Signing in..." : "Log In"}
           </Button>
         </form>
       </Form>

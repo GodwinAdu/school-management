@@ -126,6 +126,11 @@ const Nav = ({ userRole }) => {
           path: `/admin/${id}/system-config/manage-classrooms`,
         },
         {
+          title: "manage Stages",
+          roleField: "manageClassSection",
+          path: `/admin/${id}/system-config/manage-stages`,
+        },
+        {
           title: "manage House",
           roleField: "manageSchoolHouse",
           path: `/admin/${id}/system-config/manage-house`,

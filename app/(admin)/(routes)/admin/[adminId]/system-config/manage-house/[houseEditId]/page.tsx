@@ -6,32 +6,32 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentProfile } from "@/lib/hooks/current-profile";
-import { fetchDayById } from "@/lib/actions/day.actions";
-import { EditDay } from "../_component/EditDay";
+import { EditHouse } from "../_component/EditHouse";
+import { fetchHouseById } from "@/lib/actions/house.actions";
 
 const page = async ({
   params,
 }: {
-  params: { adminId: string; dayEditId: string };
+  params: { adminId: string; houseEditId: string };
 }) => {
   const user = await currentProfile();
 
   if (!user) redirect("/");
 
   const pathId = params.adminId;
-  const id = params.dayEditId;
+  const id = params.houseEditId;
 
-  const initialData = (await fetchDayById({ id })) || {};
+  const initialData = (await fetchHouseById({ id })) || {};
 
   return (
     <>
       <div className="flex justify-between items-center">
         <Heading
-          title="Update Days"
-          description="Edit and manage Days details"
+          title="Update House"
+          description="Edit and manage School House details"
         />
         <Link
-          href={`/admin/${pathId}/system-config/manage-days`}
+          href={`/admin/${pathId}/system-config/manage-house`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -40,7 +40,7 @@ const page = async ({
       </div>
       <Separator />
       <div className="pt-4 w-full">
-        <EditDay initialData={initialData} />
+        <EditHouse initialData={initialData} />
       </div>
     </>
   );

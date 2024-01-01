@@ -11,14 +11,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import { Button } from "@/components/ui/button";
 import { AdminUserColumn } from "@/lib/types";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
+import { deleteAdmin } from "@/lib/actions/admin.actions";
 import { toast } from "@/components/ui/use-toast";
-import { deleteTime } from "@/lib/actions/time.actions";
 
 interface CellActionProps {
   data: AdminUserColumn;
@@ -29,10 +39,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-
   const params = useParams();
 
-  const id: string = params.adminId;
+  const id: string | string[] = params.adminId;
 
   const { data: value, isLoading } = trpc.getCurrentRole.useQuery(
     { id },
@@ -41,19 +50,16 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   );
 
-  const handleDeleteTime = async (id:string) => {
+  const handleDeleteAdmin = async (id:string) => {
     try {
       setLoading(true);
-      
-      await deleteTime({id})
+      await deleteAdmin({id})
       toast({
         title: "Deleted Successfully",
-        description: "Please Time was deleted successfully...",
+        description: "Please Admin was deleted successfully...",
        
       });
-
       router.refresh();
-
     } catch (error) {
       toast({
         title: "Something Went Wrong",
@@ -79,15 +85,22 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {value?.editTime && (
-           <Link href={`/admin/${id}/system-config/manage-time/${data?._id}`}>
+          {value?.viewAdmin && (
+            <Link href={`/admin/${id}/manage-users/manage-admin/${data?._id}`}>
+              <DropdownMenuItem >
+              <Eye className="mr-2 h-4 w-4" /> View
+            </DropdownMenuItem>
+            </Link>
+          )}
+          {value?.editAdmin && (
+           <Link href={`/admin/${id}/manage-users/manage-admin/${data?._id}/edit`}>
              <DropdownMenuItem >
               <Edit className="mr-2 h-4 w-4" /> Update
             </DropdownMenuItem>
            </Link>
           )}
-          {value?.deleteTime && (
-            <DropdownMenuItem onClick={() => handleDeleteTime(data?._id)}>
+          {value?.deleteAdmin && (
+            <DropdownMenuItem onClick={() => handleDeleteAdmin(data?._id)}>
               <Trash className="mr-2 h-4 w-4" /> Delete
             </DropdownMenuItem>
           )}

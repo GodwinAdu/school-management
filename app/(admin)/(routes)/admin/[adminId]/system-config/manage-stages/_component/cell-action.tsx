@@ -18,7 +18,7 @@ import { AdminUserColumn } from "@/lib/types";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
-import { deleteTime } from "@/lib/actions/time.actions";
+import { deleteStage } from "@/lib/actions/stage.actions";
 
 interface CellActionProps {
   data: AdminUserColumn;
@@ -32,7 +32,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const params = useParams();
 
-  const id: string = params.adminId;
+  const id: string | string[] = params.adminId;
 
   const { data: value, isLoading } = trpc.getCurrentRole.useQuery(
     { id },
@@ -41,14 +41,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   );
 
-  const handleDeleteTime = async (id:string) => {
+  const handleDeleteStage = async (id:string) => {
     try {
       setLoading(true);
       
-      await deleteTime({id})
+      await deleteStage({id})
       toast({
         title: "Deleted Successfully",
-        description: "Please Time was deleted successfully...",
+        description: "Please Stage was deleted successfully...",
        
       });
 
@@ -79,15 +79,15 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {value?.editTime && (
-           <Link href={`/admin/${id}/system-config/manage-time/${data?._id}`}>
+          {value?.editClassSection && (
+           <Link href={`/admin/${id}/system-config/manage-stages/${data?._id}`}>
              <DropdownMenuItem >
               <Edit className="mr-2 h-4 w-4" /> Update
             </DropdownMenuItem>
            </Link>
           )}
-          {value?.deleteTime && (
-            <DropdownMenuItem onClick={() => handleDeleteTime(data?._id)}>
+          {value?.deleteClassSection && (
+            <DropdownMenuItem onClick={() => handleDeleteStage(data?._id)}>
               <Trash className="mr-2 h-4 w-4" /> Delete
             </DropdownMenuItem>
           )}

@@ -5,9 +5,8 @@ import { redirect } from "next/navigation";
 import { currentUserRole } from "@/lib/hooks/getUserRole";
 import { TableData } from "@/components/tables/table-data";
 import { columns } from "./_component/column";
-import { getAllDays } from "@/lib/actions/day.actions";
 import { TimeModal } from "./_component/TimeModel";
-
+import { getAllTimes } from "@/lib/actions/time.actions";
 
 
 
@@ -19,17 +18,17 @@ const page = async () => {
 
   const role = await currentUserRole();
 
-  const data = []
+  const data = await getAllTimes() || [];
 
 
   return (
     <>
       <div className="flex justify-between items-center">
       <Heading title="Manage School Time" description="Manage,create and edit school time" />
-      {role?.addDay && <TimeModal /> }
+      {role?.addTime && <TimeModal /> }
       </div>
       <Separator />
-      <TableData searchKey="name" columns={columns} data={data} />  
+      {role?.viewTime && <TableData searchKey="name" columns={columns} data={data} /> } 
     </>
   )
 }

@@ -6,32 +6,29 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentProfile } from "@/lib/hooks/current-profile";
-import { fetchDayById } from "@/lib/actions/day.actions";
-import { EditDay } from "../_component/EditDay";
+import { fetchStageById } from "@/lib/actions/stage.actions";
+import { EditStage } from "../_component/EditStage";
 
 const page = async ({
   params,
 }: {
-  params: { adminId: string; dayEditId: string };
+  params: { adminId: string; stageEditId: string };
 }) => {
   const user = await currentProfile();
 
   if (!user) redirect("/");
 
   const pathId = params.adminId;
-  const id = params.dayEditId;
+  const id = params.stageEditId;
 
-  const initialData = (await fetchDayById({ id })) || {};
+  const initialData = await fetchStageById({id}) || {}
 
   return (
     <>
       <div className="flex justify-between items-center">
-        <Heading
-          title="Update Days"
-          description="Edit and manage Days details"
-        />
+        <Heading title="Update Level" description="Edit and manage Level details" />
         <Link
-          href={`/admin/${pathId}/system-config/manage-days`}
+          href={`/admin/${pathId}/system-config/manage-levels`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -40,7 +37,7 @@ const page = async ({
       </div>
       <Separator />
       <div className="pt-4 w-full">
-        <EditDay initialData={initialData} />
+        <EditStage initialData={initialData} />
       </div>
     </>
   );

@@ -30,45 +30,46 @@ import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
-import { createTime } from "@/lib/actions/time.actions";
+import { Checkbox } from "@/components/ui/checkbox";
+import { createClassroom } from "@/lib/actions/classroom.actions";
+
 
 const formSchema = z.object({
-  name: z.string().min(2, {
+  name: z.string().min(1, {
     message: "name must be at least 2 characters.",
   }),
-  period: z.string().min(2, {
-    message: "time must be at least 2 characters.",
-  }),
+  status: z.boolean().optional(),
 });
 
-export function TimeModal() {
+export function ClassroomModal() {
   const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      period:""
+      status:false,
     },
   });
 
-  const { isSubmitting} = form.formState;
+  const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await createTime({
+       
+      await createClassroom({
         name: values.name,
-        period:values.time
+        status:values.status
       });
       router.refresh();
       form.reset();
       toast({
-        title: "New time created",
-        description: "New time session was added successfully...",
+        title: "New classroom created",
+        description: "New classroom was added successfully...",
       });
     } catch (error: any) {
-      console.log("error happened while creating time", error);
+      console.log("error happened while creating classroom", error);
       toast({
         title: "Something went wrong",
         description: "Please try again later...",
@@ -85,10 +86,12 @@ export function TimeModal() {
           Add
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] w-[96%]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create School Time</DialogTitle>
-          <DialogDescription>Create new School Time .</DialogDescription>
+          <DialogTitle>Create Classroom</DialogTitle>
+          <DialogDescription>
+            Create Classroom for the newly accademic year.
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <Form {...form}>
@@ -98,12 +101,9 @@ export function TimeModal() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Enter Period</FormLabel>
+                    <FormLabel>Enter Classrom Name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Eg. Morning ..."
-                        {...field}
-                      />
+                      <Input placeholder="Eg. A or Room A ...." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,23 +111,22 @@ export function TimeModal() {
               />
               <FormField
                 control={form.control}
-                name="period"
+                name="status"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Enter time</FormLabel>
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Input
-                        placeholder="Eg. 8:30 am - 4:00 pm"
-                        {...field}
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Status</FormLabel>
+                    </div>
                   </FormItem>
                 )}
               />
-              <Button disabled={isSubmitting} type="submit">
-                {isSubmitting ? "Creating..." : "Submit"}
-              </Button>
+              <Button disabled={isSubmitting} type="submit">{isSubmitting ? "Creating ..." : "Submit"}</Button>
             </form>
           </Form>
         </div>

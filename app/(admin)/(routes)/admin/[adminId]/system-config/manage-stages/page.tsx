@@ -5,8 +5,9 @@ import { redirect } from "next/navigation";
 import { currentUserRole } from "@/lib/hooks/getUserRole";
 import { TableData } from "@/components/tables/table-data";
 import { columns } from "./_component/column";
-import { HouseModal } from "./_component/HouseModal";
-import { getAllHouses } from "@/lib/actions/house.actions";
+import { StageModal } from "./_component/StageModal";
+import { getAllStages } from "@/lib/actions/stage.actions";
+
 
 
 
@@ -18,17 +19,17 @@ const page = async () => {
 
   const role = await currentUserRole();
 
-  const data = await getAllHouses() || []
+  const data = await getAllStages() || []
 
 
   return (
     <>
       <div className="flex justify-between items-center">
-      <Heading title="Manage School House" description="Manage,create and edit school house" />
-      {role?.addSchoolHouse && <HouseModal /> }
+      <Heading title="Manage School Stages" description="Manage,create and edit school Stages" />
+      {role?.addClassSection && <StageModal /> }
       </div>
       <Separator />
-      {role?.viewSchoolHouse && <TableData searchKey="name" columns={columns} data={data} /> } 
+      <TableData searchKey="name" columns={columns} data={data} />  
     </>
   )
 }

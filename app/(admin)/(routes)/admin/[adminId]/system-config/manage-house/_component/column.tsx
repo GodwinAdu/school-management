@@ -10,10 +10,6 @@ export const columns: ColumnDef<RoleColumn>[] = [
     header: "Name",
   },
   {
-    accessorKey: "period",
-    header: "Session",
-  }, 
-  {
     accessorKey: "createdBy",
     header: "Created By",
   }, 
