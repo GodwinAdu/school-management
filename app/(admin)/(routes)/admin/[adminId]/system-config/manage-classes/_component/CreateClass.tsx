@@ -28,35 +28,57 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { createClass } from "@/lib/actions/class.actions";
+import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "name must be at least 2 characters.",
+  }),
   level: z.string().min(1, {
     message: "name must be at least 2 characters.",
   }),
   stage: z.string().min(1, {
     message: "name must be at least 2 characters.",
   }),
-  classname: z.string().min(1, {
-    message: "name must be at least 2 characters.",
-  }),
 });
 
-const CreateClass = ({ levels, classrooms,stages }) => {
+const CreateClass = ({ levels, classrooms, stages }) => {
+  const router = useRouter();
+  const path = usePathname();
+  const params = useParams();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name:"",
       level: "",
       stage: "",
-      classname: "",
     },
   });
 
+  const { isSubmitting } = form.formState;
+
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>){
+    try {
+      await createClass(values, path);
+      router.push(`/admin/${params.adminId}/system-config/manage-classes`);
+      form.reset();
+      toast({
+        title: "Created Successfully",
+        description: "Created class  successfully...",
+      });
+    } catch (error: any) {
+      console.log("error happened while creating class", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later...",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
@@ -74,6 +96,22 @@ const CreateClass = ({ levels, classrooms,stages }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
                 <FormField
                   control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter name for class (any)"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="level"
                   render={({ field }) => (
                     <FormItem>
@@ -88,16 +126,17 @@ const CreateClass = ({ levels, classrooms,stages }) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                        {levels?.length === 0 ? (
-                            <SelectItem value="none" className="text-xs "  disabled>
+                          {levels?.length === 0 ? (
+                            <SelectItem
+                              value="none"
+                              className="text-xs "
+                              disabled
+                            >
                               No levels found. Create a new level.
                             </SelectItem>
                           ) : (
                             levels?.map((level) => (
-                              <SelectItem
-                                key={level?._id}
-                                value={level?.name}
-                              >
+                              <SelectItem key={level?._id} value={level?.name}>
                                 {level?.name}
                               </SelectItem>
                             ))
@@ -124,16 +163,17 @@ const CreateClass = ({ levels, classrooms,stages }) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                        {stages?.length === 0 ? (
-                            <SelectItem value="none" className="text-xs " disabled>
+                          {stages?.length === 0 ? (
+                            <SelectItem
+                              value="none"
+                              className="text-xs "
+                              disabled
+                            >
                               No stages found. Create a new stage.
                             </SelectItem>
                           ) : (
                             stages?.map((stage) => (
-                              <SelectItem
-                                key={stage?._id}
-                                value={stage?.name}
-                              >
+                              <SelectItem key={stage?._id} value={stage?.name}>
                                 {stage?.name}
                               </SelectItem>
                             ))
@@ -144,44 +184,11 @@ const CreateClass = ({ levels, classrooms,stages }) => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="classname"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Choose Class Name</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select class name (Optional)" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {classrooms?.length === 0 ? (
-                            <SelectItem value="none" className="text-xs " disabled>
-                              No classrooms found. Create a new classroom.
-                            </SelectItem>
-                          ) : (
-                            classrooms?.map((classroom) => (
-                              <SelectItem
-                                key={classroom?._id}
-                                value={classroom?.name}
-                              >
-                                {classroom?.name}
-                              </SelectItem>
-                            ))
-                          )}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                
               </div>
-              <Button type="submit">Create</Button>
+              <Button disabled={isSubmitting} type="submit">
+              {isSubmitting ? "creating ...":"submit"}
+              </Button>
             </form>
           </Form>
         </CardContent>

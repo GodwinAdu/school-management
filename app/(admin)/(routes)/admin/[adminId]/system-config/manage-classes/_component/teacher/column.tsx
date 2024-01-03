@@ -59,9 +59,4 @@ export const columns: ColumnDef<AdminUserColumn>[] = [
       <div className="capitalize">Class {row.getValue("stage")}</div>
     )
   }, 
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => <CellAction data={row.original} />,
-  },
 ];

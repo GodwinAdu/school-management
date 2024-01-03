@@ -1,4 +1,5 @@
 import Heading from "@/components/heading/Header";
+import { DataTable } from "@/components/tables/data-table";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -12,17 +13,40 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { fetchClassByStage } from "@/lib/actions/class.actions";
+import { currentProfile } from "@/lib/hooks/current-profile";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { columns } from "../_component/subject/column";
 
-const page = () => {
+const page =async ({
+  params,
+}: {
+  params: { adminId: string; slug: string };
+}) => {
+  const user = await currentProfile();
+
+  if (!user) redirect("/");
+
+  const pathId = params.adminId;
+  const stage = params.slug;
+
+  const result = await fetchClassByStage({stage});
+
+  const subjects = []
+  const students = []
+  const teachers = []
+
+  console.log(result,"class")
+
   return (
     <>
       <div className="flex justify-between items-center">
         <Heading
-          title="Class Details"
-          description="view the class details with it subjects, students antd it teachers."
+          title={`Class ${result.stage} Details`}
+          description={`view  class ${result.stage} details with it subjects, students antd it teachers.`}
         />
         <Link href={`manage-admin/create`} className={cn(buttonVariants())}>
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -41,7 +65,7 @@ const page = () => {
           <TabsContent value="details" className="w-ful">
             <Card>
               <CardHeader>
-                <CardTitle>Account</CardTitle>
+                <CardTitle>Class {result.stage}</CardTitle>
                 <CardDescription>
                   Make changes to your account here. Click save when you're
                   done.
@@ -49,40 +73,61 @@ const page = () => {
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" defaultValue="Pedro Duarte" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" defaultValue="@peduarte" />
+                  <div className="py-5">
+                    <p>Number of Subjects: <span className="mr-2 font-bold">0</span></p>
+                  </div>
+                  <Separator />
+                  <div className="py-5">
+                    <p>Number of Students: <span className="mr-2 font-bold">0</span></p>
+                  </div>
+                  <Separator />
+                  <div className="py-5">
+                    <p>Number of Teachers: <span className="mr-2 font-bold">0</span></p>
+                  </div>
+                  <Separator />
+                  <div className="flex gap-4 items-center py-5">
+                    <Link href={``} className={cn(buttonVariants())}>Create subject</Link>
+                    <Link href={``} className={cn(buttonVariants())}>Create student</Link>
+                    <Link href={``} className={cn(buttonVariants())}>Create teacher</Link>
+                  </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button>Save changes</Button>
-              </CardFooter>
             </Card>
           </TabsContent>
           <TabsContent value="subjects">
             <Card>
               <CardHeader>
-                <CardTitle>Password</CardTitle>
-                <CardDescription>
-                  Change your password here. After saving, you'll be logged out.
-                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <Label htmlFor="current">Current password</Label>
-                  <Input id="current" type="password" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="new">New password</Label>
-                  <Input id="new" type="password" />
+                  <DataTable columns={columns} data={subjects} />
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button>Save password</Button>
-              </CardFooter>
+              
+            </Card>
+          </TabsContent>
+          <TabsContent value="students">
+            <Card>
+              <CardHeader>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <DataTable columns={columns} data={students} />
+                </div>
+              </CardContent>
+              
+            </Card>
+          </TabsContent>
+          <TabsContent value="teachers">
+            <Card>
+              <CardHeader>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <DataTable columns={columns} data={teachers} />
+                </div>
+              </CardContent>
+              
             </Card>
           </TabsContent>
         </Tabs>

@@ -76,36 +76,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {value?.viewAdmin && (
-            <Link href={`/admin/${id}/manage-users/manage-admin/${data?._id}`}>
-              <DropdownMenuItem >
-              <Eye className="mr-2 h-4 w-4" /> View
-            </DropdownMenuItem>
-            </Link>
-          )}
-          {value?.editAdmin && (
-           <Link href={`/admin/${id}/manage-users/manage-admin/${data?._id}/edit`}>
-             <DropdownMenuItem >
-              <Edit className="mr-2 h-4 w-4" /> Update
-            </DropdownMenuItem>
-           </Link>
-          )}
-          {value?.deleteAdmin && (
-            <DropdownMenuItem onClick={() => handleDeleteAdmin(data?._id)}>
-              <Trash className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Link href={`/admin/${id}/system-config/manage-classes/${data?.stage}`}> view details</Link>
     </>
   );
 };

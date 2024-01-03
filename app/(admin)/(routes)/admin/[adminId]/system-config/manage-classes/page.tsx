@@ -11,7 +11,7 @@ import { currentProfile } from "@/lib/hooks/current-profile";
 import { redirect } from "next/navigation";
 import { DataTable } from "@/components/tables/data-table";
 import { columns } from "./_component/column";
-import { getAllAdmins } from "@/lib/actions/admin.actions";
+import { getAllClasses } from "@/lib/actions/class.actions";
 
 
 const page = async ({
@@ -23,7 +23,7 @@ const page = async ({
     
     if(!user) redirect("/")
 
-    const data = [];
+    const data = await getAllClasses() || [];
    
 
   return (

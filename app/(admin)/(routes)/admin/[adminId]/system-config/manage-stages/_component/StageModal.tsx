@@ -96,10 +96,7 @@ export function StageModal() {
                   <FormItem>
                     <FormLabel>Enter Stage</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Eg. Class 1 or Yeary 1"
-                        {...field}
-                      />
+                      <Input {...field} placeholder="Eg. one, two etc" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
