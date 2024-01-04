@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { AdminUserColumn } from "@/lib/types";
 
-
 export const columns: ColumnDef<AdminUserColumn>[] = [
   {
     id: "select",
@@ -34,31 +33,53 @@ export const columns: ColumnDef<AdminUserColumn>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
-    )
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "code",
     header: "Code",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("code")}</div>
-    )
+    cell: ({ row }) => <div className="capitalize">{row.getValue("code")}</div>,
   },
   {
     accessorKey: "level",
     header: "Level",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("level")}</div>
-    )
+    ),
   },
- {
+  {
     accessorKey: "stage",
     header: "Stage",
-    cell: ({ row }) => (
-      <div className="capitalize">Class {row.getValue("stage")}</div>
-    )
-  }, 
+    cell: ({ row }) => {
+      const level = row.getValue("level");
+      const stage = row.getValue("stage");
+
+      let renderedStage;
+
+      if (level === "Primary") {
+        renderedStage = `Class ${stage}`;
+      } else if (level === "Junior high") {
+        if (stage?.startsWith("jhs-")) {
+          const jhsNumber = stage?.split("-")[1];
+          renderedStage = `JHS ${jhsNumber}`;
+        } else {
+          renderedStage = `Unknown Stage `; // Handle other cases if needed
+        };;
+      } else if (level === "Secondary") {
+        if (stage?.startsWith("shs-")) {
+          const shsNumber = stage?.split("-")[1];
+          renderedStage = `SHS ${shsNumber}`;
+        } else {
+          renderedStage = `Unknown Stage `; // Handle other cases if needed
+        };;
+      } else {
+        renderedStage = `Unknown ${stage}`; // Handle other cases if needed
+      }
+
+      return <div className="capitalize">{renderedStage}</div>;
+    },
+  },
+
   {
     id: "actions",
     enableHiding: false,

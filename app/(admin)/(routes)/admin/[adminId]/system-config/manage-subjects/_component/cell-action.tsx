@@ -11,24 +11,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+
 
 import { Button } from "@/components/ui/button";
 import { AdminUserColumn } from "@/lib/types";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
-import { deleteClass } from "@/lib/actions/class.actions";
+import { deleteStage } from "@/lib/actions/stage.actions";
 
 interface CellActionProps {
   data: AdminUserColumn;
@@ -39,6 +29,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+
   const params = useParams();
 
   const id: string | string[] = params.adminId;
@@ -50,16 +41,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   );
 
-  const handleDeleteClass = async (id:string) => {
+  const handleDeleteStage = async (id:string) => {
     try {
       setLoading(true);
-      await deleteClass({id})
+      
+      await deleteStage({id})
       toast({
         title: "Deleted Successfully",
-        description: "Please Class was deleted successfully...",
+        description: "Please Stage was deleted successfully...",
        
       });
+
       router.refresh();
+
     } catch (error) {
       toast({
         title: "Something Went Wrong",
@@ -76,7 +70,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   return (
     <>
-    <DropdownMenu>
+      <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
@@ -85,21 +79,20 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {value?.editClassroom && (
-           <Link href={`/admin/${id}/system-config/manage-classes/${data?.stage}`}>
+          {value?.editClassSection && (
+           <Link href={`/admin/${id}/system-config/manage-stages/${data?._id}`}>
              <DropdownMenuItem >
-              <Eye className="mr-2 h-4 w-4" /> View details
+              <Edit className="mr-2 h-4 w-4" /> Update
             </DropdownMenuItem>
            </Link>
           )}
-          {value?.deleteClassroom && (
-            <DropdownMenuItem onClick={() => handleDeleteClass(data?._id)}>
+          {value?.deleteClassSection && (
+            <DropdownMenuItem onClick={() => handleDeleteStage(data?._id)}>
               <Trash className="mr-2 h-4 w-4" /> Delete
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      
     </>
   );
 };

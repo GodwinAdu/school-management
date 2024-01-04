@@ -4,11 +4,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CellAction } from "./cell-action";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, BadgeAlert, CheckSquare } from "lucide-react";
 import { AdminUserColumn } from "@/lib/types";
 
 
-export const columns: ColumnDef<AdminUserColumn>[] = [
+export const subjectColumns: ColumnDef<AdminUserColumn>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -32,31 +32,38 @@ export const columns: ColumnDef<AdminUserColumn>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "subjectName",
     header: "Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
+      <div className="capitalize">{row.getValue("subjectName")}</div>
     )
   },
   {
-    accessorKey: "code",
-    header: "Code",
+    accessorKey: "subjectCredit",
+    header: "Subject Credit",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("code")}</div>
+      <div className="capitalize">{row.getValue("subjectCredit")}</div>
     )
   },
   {
-    accessorKey: "level",
-    header: "Level",
+    accessorKey: "subjectHour",
+    header: "Subject Hour",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("level")}</div>
+      <div className="capitalize">{row.getValue("subjectHour")}</div>
     )
   },
- {
-    accessorKey: "stage",
-    header: "Stage",
+  {
+    accessorKey: "subjectAttribute",
+    header: "Subject Attribute",
     cell: ({ row }) => (
-      <div className="capitalize">Class {row.getValue("stage")}</div>
+      <div className="capitalize">{row.getValue("subjectAttribute")}</div>
     )
-  }, 
+  },
+  {
+    accessorKey: "status",
+    header: "Active",
+    cell: ({ row }) => (
+      <div>{row.getValue("status") ? <CheckSquare className="h-4 w-4 text-green-500" /> : <BadgeAlert className="h-4 w-4 text-red-500"  />}</div>
+    )
+  },
 ];

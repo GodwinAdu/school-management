@@ -16,6 +16,18 @@ export async function createClass(values:CreateClassProps,path:string){
 
     const random = generateCode(name);
     try {
+         // Check if the subject already exists in the database
+         const existingClass = await Class.findOne({
+            stage,
+            level,
+        });
+
+        if (existingClass) {
+            console.log("Class with the same name, stage, and level already exists.");
+            // Handle the error or return an error response as needed
+            throw new Error("Class with the same name, stage, and level already exists.");
+        }
+
         const value = new Class({
             name:name,
             level,
@@ -64,4 +76,24 @@ export async function fetchClassByStage({stage}:{stage:string}){
         console.log("unable to fetch Class",error);
         throw error;
     }
+}
+
+export async function deleteClass({ id }: { id: string }) {
+    await connectToDB();
+    try {
+        const result = await Class.findByIdAndDelete({
+            _id: id
+        })
+        if (!result) {
+            console.log("result don't exist");
+            return null; // or throw an error if you want to handle it differently
+        }
+        console.log("delete sucessfully")
+
+        return result;
+    } catch (error) {
+        console.error("Error deleting result(classes):", error);
+        throw error; // throw the error to handle it at a higher level if needed
+    }
+
 }

@@ -8,7 +8,7 @@ import { ArrowUpDown } from "lucide-react";
 import { AdminUserColumn } from "@/lib/types";
 
 
-export const columns: ColumnDef<AdminUserColumn>[] = [
+export const studentColumns: ColumnDef<AdminUserColumn>[] = [
   {
     id: "select",
     header: ({ table }) => (
