@@ -8,7 +8,7 @@ function Topbar() {
         <nav className="fixed top-0 z-30 flex w-full items-center justify-between  border-b shadow-lg px-6 py-3">
             <Link href='/' className="flex items-center gap-4">
                 <Image
-                    src="/logo.svg"
+                    src="/"
                     alt="logo"
                     width={28}
                     height={28}

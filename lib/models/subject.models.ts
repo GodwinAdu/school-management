@@ -1,5 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
+export interface ISubject extends Document {
+    _id:string;
+    subjectName: string;
+    subjectCredit: string;
+    subjectHour: string;
+    subjectLevel: string;
+    subjectStage: string;
+    subjectAttribute: string;
+    description?: string;
+    status: boolean;
+    code: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 const SubjectSchema = new mongoose.Schema({
 
     subjectName: {

@@ -1,7 +1,6 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { CellAction } from "./cell-action";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, BadgeAlert, CheckSquare } from "lucide-react";

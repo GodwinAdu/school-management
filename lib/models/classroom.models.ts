@@ -1,5 +1,12 @@
-import mongoose from "mongoose";
+import mongoose,{Document} from "mongoose";
 
+export interface IClassroom extends Document{
+    _id:string;
+    name:string;
+    status:boolean;
+    createAt:Date;
+    updateAt?:Date
+}
 const ClassroomSchema = new mongoose.Schema({
     name: {
         type: String,

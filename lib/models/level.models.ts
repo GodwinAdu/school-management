@@ -1,4 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+
+export interface ILevel extends Document {
+    _id:string;
+    name: string;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 
 const LevelSchema = new mongoose.Schema({
     name: {

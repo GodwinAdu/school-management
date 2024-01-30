@@ -1,4 +1,15 @@
-import mongoose from "mongoose";
+import mongoose,{Document} from "mongoose";
+
+export interface IClass extends Document {
+    _id:string;
+    name: string;
+    level: string;
+    stage: string;
+    code: string;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 
 const ClassSchema = new mongoose.Schema({
     

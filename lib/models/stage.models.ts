@@ -1,4 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+
+export interface IStage extends Document {
+    _id:string;
+    name: string;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 
 const StageSchema = new mongoose.Schema({
     name: {

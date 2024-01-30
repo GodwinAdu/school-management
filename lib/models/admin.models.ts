@@ -1,4 +1,35 @@
-import mongoose from "mongoose";
+import mongoose,{Document} from "mongoose";
+
+export interface IAdmin extends Document {
+    _id:string
+    userName: string;
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    email: string;
+    dob: string;
+    role: string;
+    gender: string;
+    phone: string;
+    password: string;
+    maritalStatus: string;
+    country: string;
+    state: string;
+    city: string;
+    permanentAddress?: string;
+    currentAddress: string;
+    kin: string;
+    kinPhone: string;
+    kinRelationship: string;
+    idCard: string;
+    occupation: string;
+    accountType: string;
+    accountName: string;
+    accountNumber: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
+
 
 const AdminSchema = new mongoose.Schema({
     userName: {

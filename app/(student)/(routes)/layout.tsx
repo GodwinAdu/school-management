@@ -14,11 +14,11 @@ export const metadata: Metadata = {
     children: React.ReactNode;
   }) {
     return (
-      <div className="">
+      <div className="overflow-hidden relative">
         <Topbar />
         <main className='flex flex-row'>
           <LeftSidebar />
-            <section className='flex min-h-screen flex-1 flex-col items-center  px-6 pb-10 pt-28 max-md:pb-32 sm:px-10'>
+            <section className=' flex min-h-screen flex-1 flex-col items-center bg-dark px-6 pb-10 pt-28 max-md:pb-32 sm:px-10'>
               <div className="w-full max-w-4xl">
                 {children}
               </div>

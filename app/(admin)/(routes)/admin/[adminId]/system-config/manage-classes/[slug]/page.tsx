@@ -19,10 +19,12 @@ import { cn } from "@/lib/utils";
 import { ArrowLeft, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { columns, subjectColumns } from "../_component/subject/column";
+import {  subjectColumns } from "../_component/subject/column";
 import { fetchSubjectForClass } from "@/lib/actions/subject.actions";
 import { studentColumns } from "../_component/student/column";
 import { teacherColumns } from "../_component/teacher/column";
+import { fetchStudentForClass } from "@/lib/actions/student.actions";
+import { fetchTeacherForClass } from "@/lib/actions/teacher.actions";
 
 const page = async ({
   params,
@@ -42,10 +44,18 @@ const page = async ({
       level: result.level,
       stage: result.stage,
     })) || [];
-    console.log(subjects)
 
-  const students = [];
-  const teachers = [];
+  const students = (await fetchStudentForClass({
+      level: result.level,
+      stage: result.stage,
+    })) || [];
+
+  const teachers = (await fetchTeacherForClass({
+      level: result.level,
+      stage: result.stage,
+    })) || [];
+
+  
 
   const getTitle = (result) =>{
     const { level, stage } = result;
@@ -55,15 +65,15 @@ const page = async ({
   
     if (level === "Primary") {
       title = `Class ${stage} `;
-    } else if (level === "Junior high") {
-      if (stage.startsWith("jss-")) {
+    } else if (level === "Junior") {
+      if (typeof stage === "string" && stage.startsWith("jhs-")) {
         const jssNumber = stage.split("-")[1];
-        title = `JSS ${jssNumber}`;
+        title = `JHS ${jssNumber}`;
       } else {
         title = `Unknown Stage Details`; // Handle other cases if needed
       };
     } else if (level === "Secondary") {
-      if (stage.startsWith("shs-")) {
+      if (typeof stage === "string" && stage.startsWith("shs-")) {
         const shsNumber = stage.split("-")[1];
         title = `SHS ${shsNumber}`;
       } else {
@@ -167,7 +177,7 @@ const page = async ({
               <CardHeader></CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <DataTable searchKey="name" columns={studentColumns} data={students} />
+                  <DataTable searchKey="firstName" columns={studentColumns} data={students} />
                 </div>
               </CardContent>
             </Card>
@@ -177,7 +187,7 @@ const page = async ({
               <CardHeader></CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <DataTable searchKey="name" columns={teacherColumns} data={teachers} />
+                  <DataTable searchKey="firstname" columns={teacherColumns} data={teachers} />
                 </div>
               </CardContent>
             </Card>

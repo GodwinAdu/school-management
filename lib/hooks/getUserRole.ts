@@ -1,4 +1,5 @@
 import { fetchRole } from "../actions/role.actions";
+import { IRole } from "../models/role.models";
 import { currentProfile } from "./current-profile";
 
 
@@ -14,7 +15,7 @@ export async function currentUserRole() {
     }
 
     try {
-        const userRole = await fetchRole({
+        const userRole:IRole = await fetchRole({
             value: role
         });
 
@@ -24,7 +25,7 @@ export async function currentUserRole() {
         }
 
         return userRole;
-        
+
     } catch (error: any) {
         console.log("Error happen while fetching role", error)
     }

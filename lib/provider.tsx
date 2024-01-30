@@ -6,8 +6,7 @@ import { PropsWithChildren, ReactNode, useState } from "react";
 import { absoluteUrl } from "./utils";
 import { trpc } from "@/app/_trpc/client";
 
-
-const Provider = ({ children }: ReactNode) => {
+const ProviderWrapper = ({ children }: PropsWithChildren<{}>) => {
   let [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -25,4 +24,4 @@ const Provider = ({ children }: ReactNode) => {
   );
 };
 
-export default Provider;
+export default ProviderWrapper;

@@ -55,8 +55,10 @@ export async function loginAdminUsers({ userName, password }: loginAdminUsersPro
         );
        
 
-        return user;
+        return JSON.parse(JSON.stringify(user));
+        
     } catch (error: any) {
         console.log("Unable to login admin", error);
+        throw error
     }
 }

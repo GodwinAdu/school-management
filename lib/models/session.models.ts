@@ -1,4 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+
+export interface ISession extends Document {
+    _id:string;
+    name: string;
+    period: string;
+    present: boolean;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 
 const SessionSchema = new mongoose.Schema({
     name: {

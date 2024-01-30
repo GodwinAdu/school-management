@@ -433,12 +433,7 @@ export async function fetchRole({ value }: { value: string }) {
             return
         }
 
-        const result = {
-            _id: role._id.toString(),
-            ...role._doc,
-        };
-
-        return result
+        return JSON.parse(JSON.stringify(role))
     } catch (error: any) {
         console.error("Error fetching roles by display name:", error);
         throw error; // throw the error to handle it at a higher level if needed
@@ -457,13 +452,7 @@ export async function fetchRoleById({ id }: { id: string }) {
         }
 
 
-        const result = {
-            _id: role._id.toString(),
-            ...role._doc,
-        };
-
-
-        return result
+        return JSON.parse(JSON.stringify(role))
 
     } catch (error: any) {
         console.error("Error fetching role by id:", error);
@@ -481,14 +470,7 @@ export async function getAllRoles() {
             return null; // or throw an error if you want to handle it differently
         }
 
-        const serializeRole = roles.map(role => {
-            return {
-                ...role._doc,
-                _id: role._id.toString()
-            }
-        });
-
-        return serializeRole;
+        return JSON.parse(JSON.stringify(roles))
 
     } catch (error) {
         console.error("Error fetching roles:", error);
@@ -506,7 +488,7 @@ export async function getRolesName() {
             return null; // or throw an error if you want to handle it differently
         }
 
-        return roles;
+        return JSON.parse(JSON.stringify(roles))
 
     } catch (error) {
         console.error("Error fetching roles name:", error);
@@ -526,7 +508,7 @@ export async function deleteUserRole({ id }: { id: string }) {
             return null; // or throw an error if you want to handle it differently
         }
         console.log("delete sucessfully")
-        return deleteRole;
+        return JSON.parse(JSON.stringify(deleteRole));
     } catch (error) {
         console.error("Error deleting role:", error);
         throw error; // throw the error to handle it at a higher level if needed
@@ -553,7 +535,7 @@ export async function updateRole(roleId: string, values: Partial<CreateRoleProps
 
         revalidatePath(path)
 
-        return updatedRole;
+        return JSON.parse(JSON.stringify(updatedRole));
     } catch (error) {
         console.error("Error updating role:", error);
         throw error;

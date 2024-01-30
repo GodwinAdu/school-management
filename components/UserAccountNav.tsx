@@ -14,6 +14,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Book, Gem, LogOut, User} from 'lucide-react'
 import { Icons } from './Icon'
+import { useParams } from 'next/navigation'
 
 
 
@@ -30,13 +31,17 @@ const UserAccountNav = ({
 }: UserAccountNavProps) => {
   // const subscriptionPlan = await getUserSubscriptionPlan()
 
+  const params = useParams()
+
+  const pathId = params.adminId
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
         className='overflow-visible'>
         <Button className='rounded-full h-8 w-8 aspect-square bg-slate-400'>
-          <Avatar className='relative w-8 h-8'>
+          <Avatar className='relative'>
             {imageUrl ? (
               <div className='relative aspect-square h-full w-full'>
                 <Image
@@ -49,7 +54,7 @@ const UserAccountNav = ({
             ) : (
               <AvatarFallback>
                 <span className='sr-only'>{name}</span>
-                <Icons.user className='h-4 w-4 text-zinc-900' />
+                <Icons.user className='h-6 w-6 text-black' />
               </AvatarFallback>
             )}
           </Avatar>
@@ -75,7 +80,7 @@ const UserAccountNav = ({
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href='/dashboard'><User /> Profile</Link>
+          <Link href={`/admin/${pathId}`}><User /> Dashboard</Link>
         </DropdownMenuItem>
         
         <DropdownMenuSeparator />

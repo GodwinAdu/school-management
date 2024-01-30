@@ -26,9 +26,9 @@ const page = async ({
   return (
     <>
       <div className="flex justify-between items-center">
-        <Heading title="Update Level" description="Edit and manage Level details" />
+        <Heading title="Update Stage" description="Edit and manage Stage details" />
         <Link
-          href={`/admin/${pathId}/system-config/manage-levels`}
+          href={`/admin/${pathId}/system-config/manage-stages`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

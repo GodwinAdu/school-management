@@ -41,8 +41,11 @@ import {
 } from "lucide-react";
 import { IconBadge } from "../ui/icon-badge";
 
+type NavProps = {
+  userRole:IRole
+}
 
-const Nav = ({ userRole }) => {
+const Nav = ({ userRole }:NavProps) => {
   const params = useParams();
   const pathname = usePathname();
   const [open, setOpen] = useState(0);
@@ -201,7 +204,7 @@ const Nav = ({ userRole }) => {
     },
     {
       title: "Pro/Transfer Students",
-      path: `admin/${id}/transfer-student`,
+      path: `/admin/${id}/transfer-student`,
       icon: <IconBadge size="sm" icon={Mail} />,
       roleField: "transferStudent",
     },

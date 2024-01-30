@@ -6,6 +6,8 @@ import { TRPCError } from '@trpc/server';
 import { fetchAdmin } from '@/lib/actions/fetchadmin.actions';
 import { fetchRole } from '@/lib/actions/role.actions';
 import { privateProcedure, router } from './trpc';
+import { IRole } from '@/lib/models/role.models';
+import { IAdmin } from '@/lib/models/admin.models';
 
 
 
@@ -24,11 +26,11 @@ export const appRouter = router({
 
             if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-            const user = await fetchAdmin({ id: input.id });
+            const user:IAdmin = await fetchAdmin({ id: input.id });
             
             if (!user) throw new TRPCError({ code: 'NOT_FOUND' });
 
-            const role = await fetchRole({ value: user?.role });
+            const role:IRole = await fetchRole({ value: user?.role });
             
             if (!role) throw new TRPCError({ code: 'NOT_FOUND' });
 

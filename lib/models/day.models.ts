@@ -1,4 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+export interface IDay extends Document{
+    _id:string;
+    name:string;
+    createdBy:string;
+    createAt:Date;
+    updateAt?:Date;
+}
 
 const DaySchema = new mongoose.Schema({
     name: {

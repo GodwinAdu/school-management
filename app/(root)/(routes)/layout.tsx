@@ -1,10 +1,11 @@
-import Navbar from "@/components/root/Navbar/Navbar";
+
 import Footer from "@/components/root/Footer/Footer";
+import MainNavbar from "@/components/root/Navbar/MainNavbar";
 import type { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
+  title: "School System",
   description: "Created by Jutech Dev",
 };
 export default function RootLayout({
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
    
       <div className="w-full">
-        <Navbar />
+        <MainNavbar />
         {children}
         <Footer />
       </div>

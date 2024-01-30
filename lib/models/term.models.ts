@@ -1,5 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
+
+export interface ITerm extends Document {
+    _id:string;
+    name: string;
+    createdBy: string;
+    createdAt: Date;
+    updatedAt?: Date;
+}
 const TermSchema = new mongoose.Schema({
     name: {
         type: String,

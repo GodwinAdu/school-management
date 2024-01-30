@@ -14,5 +14,20 @@ export function absoluteUrl(path: string) {
   }${path}`
 }
 
+export const isValidEmail = (email:string) => {
+  // Regular expression for basic email validation
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   // Regular expression for advanced email validation
+   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+};
+
+export const isValidPhoneNumber = (phone:string) => {
+  // Regular expression for basic phone number validation
+  const phoneRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+  return phoneRegex.test(phone);
+};
+
+
 
  
