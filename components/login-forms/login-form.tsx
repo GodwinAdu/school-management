@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "../ui/use-toast";
-import { loginAdminUsers } from "@/lib/actions/login.actions";
+import { loginAdminUsers, loginStudent, loginTeacher } from "@/lib/actions/login.actions";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
@@ -38,8 +38,8 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-    const { toast } = useToast()
-    const router = useRouter()
+  const { toast } = useToast()
+  const router = useRouter()
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,30 +50,76 @@ const LoginForm = () => {
     },
   });
 
-  const {isSubmitting} = form.formState;
+  const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       if (values.role === "teacher") {
-        toast({
-          title: "Teacher login",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        });
+        try {
+          const teacher = await loginTeacher({
+            userName: values.username,
+            password: values.password
+          })
+          form.reset();
+          if (teacher) {
+            router.push(`/teacher/${teacher._id}`);
+            toast({
+              title: "Login successfully",
+              description: `Welcome, ${teacher.firstName}, You've logged in successfully`,
+            });
+          } else {
+            toast({
+              title: "Invalid credentials",
+              description: "Please make sure you enter the correct credentials and try again later",
+              variant: "destructive",
+            });
+          }
+        } catch (error: any) {
+          console.log(error)
+          toast({
+            title: "something went wrong",
+            description: "Please try again later",
+            variant: "destructive"
+          });
+        }
       } else if (values.role === "student") {
-        toast({
-          title: "Student login",
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        });
+        try {
+          const student = await loginStudent({
+            userName: values.username,
+            password: values.password
+          })
+          form.reset();
+          if (student) {
+            router.push(`/student/${student._id}`);
+            toast({
+              title: "Login successfully",
+              description: `Welcome, ${student.firstName}, You've logged in successfully`,
+            });
+          } else {
+            toast({
+              title: "Invalid credentials",
+              description: "Please make sure you enter the correct credentials and try again later",
+              variant: "destructive",
+            });
+          }
+        } catch (error: any) {
+          console.log(error)
+          toast({
+            title: "something went wrong",
+            description: "Please try again later",
+            variant: "destructive"
+          });
+        }
       } else {
         try {
           const currentUser = await loginAdminUsers({
-            userName:values.username,
-            password:values.password
+            userName: values.username,
+            password: values.password
           })
           form.reset();
           if (currentUser) {
-            router.push(`/admin/${currentUser._id}`);
+           window.location.assign(`/admin/${currentUser._id}`);
             toast({
               title: "Login successfully",
               description: `Welcome, ${currentUser.firstName}, You've logged in successfully`,
@@ -85,24 +131,26 @@ const LoginForm = () => {
               variant: "destructive",
             });
           }
-        } catch (error:any) {
+        } catch (error: any) {
           toast({
             title: "something went wrong",
             description: "Please try again later",
-            variant:"destructive"
+            variant: "destructive"
           });
         }
       }
     } catch (error) {
+      console.log(error)
       toast({
-        title: "Teacher login",
-        description: "Friday, February 10, 2023 at 5:57 PM",
+        title: "Couldnt login",
+        description: `Error happened ${error}`,
+        variant: "destructive"
       });
     }
   }
 
   return (
-    <div>
+    <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -112,7 +160,12 @@ const LoginForm = () => {
               <FormItem>
                 <FormLabel className="font-bold">Username</FormLabel>
                 <FormControl>
-                  <Input type="text" placeholder="Enter Username" {...field} />
+                  <Input
+                    type="text"
+                    placeholder="Enter Username"
+                    {...field}
+                    disabled={isSubmitting}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -129,6 +182,7 @@ const LoginForm = () => {
                     type="password"
                     placeholder="Enter password"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -144,6 +198,7 @@ const LoginForm = () => {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  disabled={isSubmitting}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -151,10 +206,7 @@ const LoginForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="moderator">Moderator</SelectItem>
-                    <SelectItem value="accountant">Accountant</SelectItem>
-                    <SelectItem value="liberian">Liberian</SelectItem>
+                    <SelectItem value="admin">Administrator</SelectItem>
                     <SelectItem value="teacher">Teacher</SelectItem>
                     <SelectItem value="student">Student</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
@@ -169,7 +221,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 };
 

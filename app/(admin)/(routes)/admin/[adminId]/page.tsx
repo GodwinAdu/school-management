@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 
 import { toast } from "@/components/ui/use-toast";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { CreditCard, DollarSign, Package } from "lucide-react";
 import { redirect } from "next/navigation";
 

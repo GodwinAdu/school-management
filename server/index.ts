@@ -8,6 +8,7 @@ import { fetchRole } from '@/lib/actions/role.actions';
 import { privateProcedure, router } from './trpc';
 import { IRole } from '@/lib/models/role.models';
 import { IAdmin } from '@/lib/models/admin.models';
+import { getStudentAttendances } from '@/lib/helpers/attendance';
 
 
 
@@ -26,15 +27,38 @@ export const appRouter = router({
 
             if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' });
 
-            const user:IAdmin = await fetchAdmin({ id: input.id });
-            
+            const user: IAdmin = await fetchAdmin({ id: input.id });
+
             if (!user) throw new TRPCError({ code: 'NOT_FOUND' });
 
-            const role:IRole = await fetchRole({ value: user?.role });
-            
+            const role: IRole = await fetchRole({ value: user?.role });
+
             if (!role) throw new TRPCError({ code: 'NOT_FOUND' });
 
             return role;
+
+        }),
+    getStudentAttendance: privateProcedure.input(z.object({ classId: z.string()}))
+        .query(async ({ input, ctx }) => {
+
+            const { userId } = ctx;
+
+            if (!userId) throw new TRPCError({ code: 'UNAUTHORIZED' });
+
+            const currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+            const isoString = currentDate.toISOString() ;
+
+            const attendance = await getStudentAttendances({
+                classId: input.classId,
+                searchDate: isoString,
+            });
+
+            if (!attendance) throw new TRPCError({ code: 'NOT_FOUND' });
+
+            console.log(JSON.parse(JSON.stringify(attendance)),"trpc")
+            return JSON.parse(JSON.stringify(attendance));
+
 
         }),
     // authCallback: publicProcedure.query(async () => {

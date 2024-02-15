@@ -3,7 +3,7 @@ import Heading from "@/components/heading/Header";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { fetchAdmin } from "@/lib/actions/fetchadmin.actions";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";

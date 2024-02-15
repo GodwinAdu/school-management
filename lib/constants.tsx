@@ -2,37 +2,37 @@
 export const sidebarLinks = [
   {
     imgURL: "/assets/home.svg",
-    route: "/",
+    route: "/student/dashboard",
     label: "Dashboard",
   },
   {
     imgURL: "/assets/search.svg",
-    route: "/search",
+    route: "/student/e-learning",
     label: "E-Learning",
   },
   {
     imgURL: "/assets/heart.svg",
-    route: "/activity",
+    route: "/student/exams",
     label: "Exams",
   },
   {
     imgURL: "/assets/create.svg",
-    route: "/create-thread",
+    route: "/student/playgrounds",
     label: "Playgrounds",
   },
   {
     imgURL: "/assets/community.svg",
-    route: "/communities",
+    route: "/student/transaction",
     label: "Transaction",
   },
   {
     imgURL: "/assets/user.svg",
-    route: "/profile",
+    route: "/student/transcript",
     label: "Transcript",
   },
   {
     imgURL: "/assets/user.svg",
-    route: "/result",
+    route: "/student/result",
     label: "Results",
   },
 ];

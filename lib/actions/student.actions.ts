@@ -4,7 +4,7 @@ import { hash } from "bcrypt";
 import Student from "../models/student.models";
 import { connectToDB } from "../mongoose";
 import { revalidatePath } from "next/cache";
-import { generateStudentID } from "../hooks/generateStudentId";
+import { generateStudentID } from "../helpers/generateStudentId";
 
 
 interface CreateStudentProps {

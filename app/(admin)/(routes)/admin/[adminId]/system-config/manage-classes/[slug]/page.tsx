@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchClassByStage } from "@/lib/actions/class.actions";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, PlusCircle } from "lucide-react";
 import Link from "next/link";

@@ -17,7 +17,7 @@ import { toast } from "@/components/ui/use-toast";
 import { deleteUserRole } from "@/lib/actions/role.actions";
 import { RoleColumn } from "@/lib/types";
 import Link from "next/link";
-import { currentUserRole } from "@/lib/hooks/getUserRole";
+import { currentUserRole } from "@/lib/helpers/getUserRole";
 import { GlobalContext } from "@/context/globalContext";
 import { trpc } from "@/app/_trpc/client";
 

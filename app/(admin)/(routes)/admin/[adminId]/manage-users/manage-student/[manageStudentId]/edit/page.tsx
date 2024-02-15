@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import EditStudentForm from "../../_component/EditStudentForm";
 import { fetchStudent } from "@/lib/actions/student.actions";
 import { getAllLevels } from "@/lib/actions/level.actions";

@@ -1,7 +1,7 @@
 
-import { currentProfile } from '@/lib/hooks/current-profile';
+import { currentProfile } from '@/lib/helpers/current-profile';
 import Nav from './Nav'
-import { currentUserRole } from '@/lib/hooks/getUserRole';
+import { currentUserRole } from '@/lib/helpers/getUserRole';
 import { redirect } from 'next/navigation';
 import { RoleColumn } from '@/lib/types';
 

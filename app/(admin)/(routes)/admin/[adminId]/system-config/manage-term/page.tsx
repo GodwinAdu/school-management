@@ -1,12 +1,12 @@
 import Heading from "@/components/heading/Header";
 import { Separator } from "@/components/ui/separator";
 import { ModalTerm } from "./_components/UsetermModal";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { getAllTerms } from "@/lib/actions/term.actions";
 import { columns } from "./_components/column";
 import { redirect } from "next/navigation";
 import { TableData } from "@/components/tables/table-data";
-import { currentUserRole } from '@/lib/hooks/getUserRole'
+import { currentUserRole } from '@/lib/helpers/getUserRole'
 
 const page = async () => {
   const user = await currentProfile();

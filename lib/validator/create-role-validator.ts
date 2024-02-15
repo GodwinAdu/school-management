@@ -140,6 +140,16 @@ export const CreateRoleSchema = z.object({
     viewStudent: z.boolean().optional(),
     editStudent: z.boolean().optional(),
     deleteStudent: z.boolean().optional(),
+    addTeacherAttendance: z.boolean().optional(),
+    manageTeacherAttendance: z.boolean().optional(),
+    viewTeacherAttendance: z.boolean().optional(),
+    editTeacherAttendance: z.boolean().optional(),
+    deleteTeacherAttendance: z.boolean().optional(),
+    addStudentAttendance: z.boolean().optional(),
+    manageStudentAttendance: z.boolean().optional(),
+    viewStudentAttendance: z.boolean().optional(),
+    editStudentAttendance: z.boolean().optional(),
+    deleteStudentAttendance: z.boolean().optional(),
     publishResult: z.boolean().optional(),
   });
   

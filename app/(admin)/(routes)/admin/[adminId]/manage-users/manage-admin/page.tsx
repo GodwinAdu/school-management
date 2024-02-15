@@ -7,13 +7,14 @@ import { buttonVariants } from "@/components/ui/button"
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { redirect } from "next/navigation";
 import { DataTable } from "@/components/tables/data-table";
 import { columns } from "./_components/column";
 import { getAllAdmins } from "@/lib/actions/admin.actions";
+import { IAdmin } from "@/lib/models/admin.models";
 
-export const dynamic = "force-dynamic"
+
 const page = async ({
     params
 }:{
@@ -23,7 +24,7 @@ const page = async ({
     
     if(!user) redirect("/")
 
-    const data = await getAllAdmins();
+    const data:IAdmin = await getAllAdmins();
    
 
   return (

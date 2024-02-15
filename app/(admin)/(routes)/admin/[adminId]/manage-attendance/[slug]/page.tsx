@@ -14,9 +14,9 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetchClassByStage } from "@/lib/actions/class.actions";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, PlusCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { fetchSubjectForClass } from "@/lib/actions/subject.actions";
@@ -24,6 +24,8 @@ import { fetchStudentForClass } from "@/lib/actions/student.actions";
 import { fetchTeacherForClass } from "@/lib/actions/teacher.actions";
 import { teacherColumns } from "../_component/teacher/column";
 import { studentColumns } from "../_component/student/column";
+import { IClass } from "@/lib/models/class.models";
+import { getStudentAttendances } from "@/lib/helpers/attendance";
 
 const page = async ({
   params,
@@ -40,28 +42,33 @@ const page = async ({
   const result = await fetchClassByStage({ stage });
 
   const subjects = (await fetchSubjectForClass({
-      level: result.level,
-      stage: result.stage,
-    })) || [];
+    level: result.level,
+    stage: result.stage,
+  })) || [];
 
   const students = (await fetchStudentForClass({
-      level: result.level,
-      stage: result.stage,
-    })) || [];
+    level: result.level,
+    stage: result.stage,
+  })) || [];
 
   const teachers = (await fetchTeacherForClass({
-      level: result.level,
-      stage: result.stage,
-    })) || [];
+    level: result.level,
+    stage: result.stage,
+  })) || [];
 
-  
 
-  const getTitle = (result) =>{
+  const attendances = await getStudentAttendances()
+
+  console.log(attendances)
+
+
+
+  const getTitle = (result: IClass) => {
     const { level, stage } = result;
-    console.log(level,stage)
-  
+    console.log(level, stage)
+
     let title;
-  
+
     if (level === "Primary") {
       title = `Class ${stage} `;
     } else if (level === "Junior") {
@@ -81,7 +88,7 @@ const page = async ({
     } else {
       title = `Unknown ${stage} `; // Handle other cases if needed
     }
-  
+
     return title;
   }
 
@@ -89,15 +96,15 @@ const page = async ({
     <>
       <div className="flex justify-between items-center">
         <Heading
-         title={`${getTitle(result)} Details`}
-          description={`View ${getTitle(result)} with it subjects, students antd it teachers.`}
+          title={`${getTitle(result)} Attendance`}
+          description={`Mark ${getTitle(result)} Students and Teacher Attendance.`}
         />
         <Link
-          href={`/admin/${pathId}/manage-attendance`}
+          href={`${stage}/create`}
           className={cn(buttonVariants())}
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
+          <ArrowRight className="w-4 h-4 mr-2" />
+          Mark
         </Link>
       </div>
       <Separator />
@@ -109,10 +116,34 @@ const page = async ({
           </TabsList>
           <TabsContent value="students">
             <Card>
-              <CardHeader></CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <DataTable searchKey="firstName" columns={studentColumns} data={students} />
+                  <Tabs defaultValue="present" className=" w-full">
+                    <TabsList className="grid w-full max-w-lg grid-cols-4">
+                      <TabsTrigger value="present">Presents</TabsTrigger>
+                      <TabsTrigger value="absent">Absents</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="present">
+                      <Card>
+                        <CardHeader></CardHeader>
+                        <CardContent className="space-y-2">
+                          <div className="space-y-1">
+
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                    <TabsContent value="absent">
+                      <Card>
+                        <CardHeader></CardHeader>
+                        <CardContent className="space-y-2">
+                          <div className="space-y-1">
+
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </TabsContent>
+                  </Tabs>
                 </div>
               </CardContent>
             </Card>
@@ -122,7 +153,7 @@ const page = async ({
               <CardHeader></CardHeader>
               <CardContent className="space-y-2">
                 <div className="space-y-1">
-                  <DataTable searchKey="firstname" columns={teacherColumns} data={teachers} />
+
                 </div>
               </CardContent>
             </Card>

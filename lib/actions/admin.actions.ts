@@ -3,7 +3,7 @@
 import { hash } from "bcrypt";
 import Adminuser from "../models/admin.models";
 import { connectToDB } from "../mongoose";
-import { getTokenValue } from "@/lib/hooks/getTokenValue"
+import { getTokenValue } from "@/lib/helpers/getTokenValue"
 import { revalidatePath } from "next/cache";
 
 

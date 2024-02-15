@@ -40,6 +40,7 @@ import {
   Users,
 } from "lucide-react";
 import { IconBadge } from "../ui/icon-badge";
+import { IRole } from "@/lib/models/role.models";
 
 type NavProps = {
   userRole:IRole
@@ -164,12 +165,12 @@ const Nav = ({ userRole }:NavProps) => {
       subMenuItems: [
         {
           title: "School events",
-          roleField: "schoolEvent",
+          roleField: "manageSchoolEvent",
           path: `/admin/${id}/frontend-display/school-events`,
         },
         {
           title: "School Banners",
-          roleField: "schoolBanner",
+          roleField: "manageSchoolBanner",
           path: `/admin/${id}/frontend-display/school-banners`,
         },
         
@@ -210,9 +211,23 @@ const Nav = ({ userRole }:NavProps) => {
     },
     {
       title: "Manage Attendance",
-      path: `/admin/${id}/manage-attendance`,
-      icon: <IconBadge size="sm" icon={BadgeHelp} />,
+      path: "",
+      icon: <IconBadge size="sm" icon={ScreenShare} />,
       roleField: "manageAttendance",
+      submenu: true,
+      subMenuItems: [
+        {
+          title: "Students Attendances",
+          roleField: "manageStudentAttendance",
+          path: `/admin/${id}/manage-attendance/student`,
+        },
+        {
+          title: "Teachers Attendances",
+          roleField: "manageTeacherAttendance",
+          path: `/admin/${id}/manage-attendance/teacher`,
+        },
+        
+      ],
     },
     {
       title: "Manage Time table",
@@ -337,7 +352,7 @@ const Nav = ({ userRole }:NavProps) => {
 
   const filteredItems = SIDENAV_ITEMS.filter((item) => {
     if (item.roleField && item.roleField !== "help") {
-      return userRole && userRole[item?.roleField];
+      return userRole && userRole[item?.roleField  as keyof IRole];
     }
 
     return true;
@@ -345,7 +360,7 @@ const Nav = ({ userRole }:NavProps) => {
     if (mainItem.subMenuItems) {
       const filteredSubItems = mainItem.subMenuItems.map((subItem) => ({
         ...subItem,
-        visible: !subItem.roleField || userRole[subItem.roleField],
+        visible: !subItem.roleField || userRole[subItem.roleField  as keyof IRole],
       }));
 
       // Include the main item only if there are accessible sub-menu items

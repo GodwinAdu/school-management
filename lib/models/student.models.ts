@@ -1,7 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export interface IStudent extends Document {
-    _id:string;
+    _id?:string;
     userName: string;
     firstName: string;
     middleName?: string;
@@ -47,11 +47,12 @@ const StudentSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     dob: {
         type: String,
-        required: true
+        required: true,
     },
     role:{
         type:String,
@@ -120,7 +121,6 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    attendance: [{ date: Date, present: Boolean }],
     createdAt: {
         type: Date,
         default: Date.now,

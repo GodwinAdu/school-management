@@ -41,7 +41,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
-  const id: string | string[] = params.adminId;
+  const id: string = params.adminId as string;
 
   const { data: value, isLoading } = trpc.getCurrentRole.useQuery(
     { id },
@@ -86,7 +86,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           {value?.editClassroom && (
-           <Link href={`/admin/${id}/manage-attendance/${data?.stage}`}>
+           <Link href={`/admin/${id}/manage-attendance/student/${data?.stage}`}>
              <DropdownMenuItem >
               <Eye className="mr-2 h-4 w-4" /> View details
             </DropdownMenuItem>

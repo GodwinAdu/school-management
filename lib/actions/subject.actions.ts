@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache";
-import { generateCode } from "../hooks/generateCode";
+import { generateCode } from "../helpers/generateCode";
 import Subject from "../models/subject.models";
 import { connectToDB } from "../mongoose";
 

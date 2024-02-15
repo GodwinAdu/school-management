@@ -1,11 +1,11 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { CellAction } from "./cell-action";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { AdminUserColumn } from "@/lib/types";
+import { useState } from "react";
 
 export const teacherColumns: ColumnDef<AdminUserColumn>[] = [
   {
@@ -107,6 +107,35 @@ export const teacherColumns: ColumnDef<AdminUserColumn>[] = [
       }
 
       return <div className="capitalize">{renderedStage}</div>;
+    },
+  },
+  {
+    accessorKey: "",
+    header: "Attendance",
+    cell: ({ row }) => {
+      const [attendanceStatus, setAttendanceStatus] = useState<boolean>(false);
+
+      const id = row.original._id
+
+      const handleAttendanceChange = async (isChecked: boolean) => {
+        setAttendanceStatus(isChecked);
+
+        // Send attendance status to Mongoose
+        try {
+          
+          console.log('Attendance updated successfully');
+        } catch (error:any) {
+          console.error('Error updating attendance:', error);
+        }
+      };
+
+      return (
+        <Checkbox
+          checked={attendanceStatus}
+          onCheckedChange={(value) => handleAttendanceChange(!!value)}
+          aria-label="Mark attendance"
+        />
+      );
     },
   },
 ];

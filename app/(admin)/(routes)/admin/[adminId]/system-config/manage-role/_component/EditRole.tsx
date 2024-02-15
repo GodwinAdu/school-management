@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import {  updateRole } from "@/lib/actions/role.actions";
+import { updateRole } from "@/lib/actions/role.actions";
+import { IRole } from "@/lib/models/role.models";
 import { CreateRoleSchema } from "@/lib/validator/create-role-validator";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,154 +22,36 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const EditRole = ({initialData}) => {
+type EditRoleProps = {
+  initialData: IRole
+}
+
+const EditRole = ({ initialData }: EditRoleProps) => {
   const path = usePathname();
   const router = useRouter();
   const params = useParams();
 
-  // get functions to build form with useForm() hook
-  const { formState } = useForm();
-  const { isSubmitting } = formState;
+
+
+  const roleId = params.manageRoleId as string
+
+  const defaultValues: Record<string, string | boolean> = Object.fromEntries(
+    Object.keys(CreateRoleSchema.shape).map((key) => {
+      // Check if the key should have a default value of ""
+      if (key === 'name' || key === 'displayName' || key === 'description') {
+        return [key, ''];
+      }
+      // Otherwise, default value is false
+      return [key, false];
+    })
+  );
   // 1. Define your form.
   const form = useForm<z.infer<typeof CreateRoleSchema>>({
     resolver: zodResolver(CreateRoleSchema),
-    defaultValues:initialData ||  {
-        name: "",
-        displayName: "",
-        description: "",
-        manageSchool: false,
-        manageAccess: false,
-        dashboard: false,
-        schoolInfo: false,
-        systemConfig: false,
-        frontendManagement: false,
-        manageUsers: false,
-        transferStudent: false,
-        manageAttendance: false,
-        manageTimeTable: false,
-        repeatStudent: false,
-        examsManagement: false,
-        salaryAndPayment: false,
-        feesAndPayment: false,
-        library: false,
-        viewChart: false,
-        viewMemberTab: false,
-        viewEnquiries: false,
-        viewExpenses: false,
-        addRole: false,
-        manageRole: false,
-        viewRole: false,
-        editRole: false,
-        deleteRole: false,
-        addTerm: false,
-        manageTerm: false,
-        viewTerm: false,
-        editTerm: false,
-        deleteTerm: false,
-        addClass: false,
-        manageClass: false,
-        viewClass: false,
-        editClass: false,
-        deleteClass: false,
-        addSubject: false,
-        manageSubject: false,
-        viewSubject: false,
-        editSubject: false,
-        deleteSubject: false,
-        addLevel: false,
-        manageLevel: false,
-        viewLevel: false,
-        editLevel: false,
-        deleteLevel: false,
-        addSession: false,
-        manageSession: false,
-        viewSession: false,
-        editSession: false,
-        deleteSession: false,
-        addDay: false,
-        manageDay: false,
-        viewDay: false,
-        editDay: false,
-        deleteDay: false,
-        addTime: false,
-        manageTime: false,
-        viewTime: false,
-        editTime: false,
-        deleteTime: false,
-        addClassroom: false,
-        manageClassroom: false,
-        viewClassroom: false,
-        editClassroom: false,
-        deleteClassroom: false,
-        addClassSection: false,
-        manageClassSection: false,
-        viewClassSection: false,
-        editClassSection: false,
-        deleteClassSection: false,
-        addPlotSection: false,
-        managePlotSection: false,
-        viewPlotSection: false,
-        editPlotSection: false,
-        deletePlotSection: false,
-        addSchoolHouse: false,
-        manageSchoolHouse: false,
-        viewSchoolHouse: false,
-        editSchoolHouse: false,
-        deleteSchoolHouse: false,
-        addGradingSystem: false,
-        manageGradingSystem: false,
-        viewGradingSystem: false,
-        editGradingSystem: false,
-        deleteGradingSystem: false,
-        addSchoolEvent: false,
-        manageSchoolEvent: false,
-        viewSchoolEvent: false,
-        editSchoolEvent: false,
-        deleteSchoolEvent: false,
-        addSchoolBanner: false,
-        manageSchoolBanner: false,
-        viewSchoolBanner: false,
-        editSchoolBanner: false,
-        deleteSchoolBanner: false,
-        addSalaryStructure: false,
-        manageSalaryStructure: false,
-        viewSalaryStructure: false,
-        editSalaryStructure: false,
-        deleteSalaryStructure: false,
-        addSalaryPayment: false,
-        manageSalaryPayment: false,
-        viewSalaryPayment: false,
-        editSalaryPayment: false,
-        deleteSalaryPayment: false,
-        addBook: false,
-        manageBook: false,
-        viewBook: false,
-        editBook: false,
-        deleteBook: false,
-        addIssueBook: false,
-        manageIssueBook: false,
-        viewIssueBook: false,
-        editIssueBook: false,
-        deleteIssueBook: false,
-        addAdmin: false,
-        manageAdmin: false,
-        viewAdmin: false,
-        editAdmin: false,
-        deleteAdmin: false,
-        addTeacher: false,
-        manageTeacher: false,
-        viewTeacher: false,
-        editTeacher: false,
-        deleteTeacher: false,
-        addStudent: false,
-        manageStudent: false,
-        viewStudent: false,
-        editStudent: false,
-        deleteStudent: false,
-        publishResult: false,
-      },
+    defaultValues: initialData || defaultValues
   });
-  const roleId = params.manageRoleId
+  
+  const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof CreateRoleSchema>) {
@@ -176,20 +59,20 @@ const EditRole = ({initialData}) => {
       await updateRole(
         roleId,
         values,
-         path,
-         );
-      
+        path,
+      );
+
       toast({
         title: "Role Updated sucessfully",
         description: "Role was updated sucessfully...",
       });
-      
+
       router.push(`/admin/${params?.adminId}/system-config/manage-role/${roleId}`);
       router.refresh()
     } catch (error: any) {
       console.log("something went wrong", error);
       toast({
-        title: "Somethin went wrong",
+        title: "Somethingt went wrong",
         description: "Please try again later...",
         variant: "destructive",
       });
@@ -208,7 +91,7 @@ const EditRole = ({initialData}) => {
                     <div className="font-bold text-md">Edit Role</div>
                   </div>
                   <Button disabled={isSubmitting} type="submit">
-                    Update
+                    {isSubmitting ? "Updating..." : "Update"}
                   </Button>
                 </div>
                 <div className="px-2 md:px-5">
@@ -2247,6 +2130,186 @@ const EditRole = ({initialData}) => {
                           </FormControl>
                           <div className="space-y-1 leading-none">
                             <FormLabel>View Manage Student</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <h1 className="text-white text-xs bg-black/80 p-0.5">
+                    STUDENT ATTENDANCE ACCESS
+                  </h1>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                    <FormField
+                      control={form.control}
+                      name="addStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Add Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="viewStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="editStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Edit Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="deleteStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Delete Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="manageStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Manage Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <h1 className="text-white text-xs bg-black/80 p-0.5">
+                    TEACHER ATTENDANCE ACCESS
+                  </h1>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                    <FormField
+                      control={form.control}
+                      name="addTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Add Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="viewTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="editTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Edit Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="deleteTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Delete Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="manageTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Manage Teacher Attendance</FormLabel>
                           </div>
                         </FormItem>
                       )}

@@ -1,7 +1,7 @@
-import mongoose,{Document} from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 export interface IRole extends Document {
-    _id:string;
+    _id: string;
     name: string;
     displayName: string;
     description?: string;
@@ -15,6 +15,8 @@ export interface IRole extends Document {
     transferStudent: boolean;
     manageAttendance: boolean;
     manageTimeTable: boolean;
+    studentAttendance: boolean;
+    teacherAttendance: boolean;
     repeatStudent: boolean;
     examsManagement: boolean;
     salaryAndPayment: boolean;
@@ -29,6 +31,16 @@ export interface IRole extends Document {
     viewRole: boolean;
     editRole: boolean;
     deleteRole: boolean;
+    addStudentAttendance: boolean;
+    manageStudentAttendance: boolean;
+    viewStudentAttendance: boolean;
+    editStudentAttendance: boolean;
+    deleteStudentAttendance: boolean;
+    addTeacherAttendance: boolean;
+    manageTeacherAttendance: boolean;
+    viewTeacherAttendance: boolean;
+    editTeacherAttendance: boolean;
+    deleteTeacherAttendance: boolean;
     addTerm: boolean;
     manageTerm: boolean;
     viewTerm: boolean;
@@ -228,6 +240,14 @@ const RoleSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    studentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    teacherAttendance: {
+        type: Boolean,
+        default: false
+    },
     addRole: {
         type: Boolean,
         default: false
@@ -245,6 +265,46 @@ const RoleSchema = new mongoose.Schema({
         default: false
     },
     deleteRole: {
+        type: Boolean,
+        default: false
+    },
+    addStudentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    manageStudentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    viewStudentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    editStudentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    deleteStudentAttendance: {
+        type: Boolean,
+        default: false
+    },
+    addTeacherAttendance: {
+        type: Boolean,
+        default: false
+    },
+    manageTeacherAttendance: {
+        type: Boolean,
+        default: false
+    },
+    viewTeacherAttendance: {
+        type: Boolean,
+        default: false
+    },
+    editTeacherAttendance: {
+        type: Boolean,
+        default: false
+    },
+    deleteTeacherAttendance: {
         type: Boolean,
         default: false
     },

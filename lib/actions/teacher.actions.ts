@@ -2,7 +2,7 @@
 
 import { hash } from "bcrypt";
 import { connectToDB } from "../mongoose";
-import { getTokenValue } from "@/lib/hooks/getTokenValue"
+import { getTokenValue } from "@/lib/helpers/getTokenValue"
 import { revalidatePath } from "next/cache";
 import Teacher from "../models/teacher.models";
 

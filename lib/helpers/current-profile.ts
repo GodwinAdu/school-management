@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-import jwt, { TokenExpiredError } from "jsonwebtoken"
+import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken"
 
 import { fetchAdmin } from "../actions/fetchadmin.actions";
 
@@ -38,14 +38,14 @@ export async function currentProfile() {
             return null;
         };
 
-        const decode: RequestCookie | undefined = await jwt.verify(tokenValue.value, process.env.TOKEN_SECRET!);
+        const decode: string | JwtPayload = await jwt.verify(tokenValue.value, process.env.TOKEN_SECRET!);
         
         // Check if the token has expired
         if (!decode) {
             return null;
         }
 
-        const user = await fetchAdmin({ id: decode?.id });
+        const user = await fetchAdmin({ id: decode?.id as string });
 
         if (!user) {
             return null;

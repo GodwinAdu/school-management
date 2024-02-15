@@ -1,17 +1,15 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox} from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { RoleColumn } from "@/lib/types";
+import { IRole } from "@/lib/models/role.models";
 import { CreateRoleSchema } from "@/lib/validator/create-role-validator";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,17 +17,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const DisplayRole = ({initialData}:RoleColumn) => {
- 
 
+type DisplayRoleProps = {
+  initialData:IRole
+}
 
+const DisplayRole = ({ initialData }: DisplayRoleProps) => {
 
   const form = useForm<z.infer<typeof CreateRoleSchema>>({
     resolver: zodResolver(CreateRoleSchema),
     defaultValues: initialData
   });
 
- 
+
 
   return (
     <>
@@ -45,20 +45,20 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                 </div>
                 <div className="px-2 md:px-5 ">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-5">
-                      <div>
-                        <h1 className="font-bold">Name</h1>
-                        <p className="italic">{initialData.name}</p>
-                      </div>
-                      <div>
-                        <h1 className="font-bold">Display Name</h1>
-                        <p className="italic">{initialData.displayName}</p>
-                      </div>
-                      <div>
-                        <h1 className="font-bold">Description</h1>
-                        <p className="italic">{initialData.description}</p>
-                      </div>
+                    <div>
+                      <h1 className="font-bold">Name</h1>
+                      <p className="italic">{initialData.name}</p>
+                    </div>
+                    <div>
+                      <h1 className="font-bold">Display Name</h1>
+                      <p className="italic">{initialData.displayName}</p>
+                    </div>
+                    <div>
+                      <h1 className="font-bold">Description</h1>
+                      <p className="italic">{initialData.description}</p>
+                    </div>
                   </div>
-                 
+
                   <h1 className="text-white text-xs bg-black/80 p-0.5">
                     GLOBAL ACCESS
                   </h1>
@@ -69,9 +69,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -87,9 +88,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -110,9 +112,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -128,9 +131,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -146,9 +150,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -164,9 +169,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -182,9 +188,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -200,9 +207,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -218,9 +226,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -236,9 +245,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -254,9 +264,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -272,9 +283,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -290,9 +302,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -308,9 +321,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -331,9 +345,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -349,9 +364,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -367,9 +383,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -385,9 +402,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -405,9 +423,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -430,9 +449,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -448,9 +468,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -466,9 +487,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -484,9 +506,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -502,9 +525,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -525,9 +549,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -543,9 +568,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -561,9 +587,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -579,9 +606,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -597,9 +625,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -620,9 +649,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -638,9 +668,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -656,9 +687,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -674,9 +706,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -692,9 +725,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -716,9 +750,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -734,9 +769,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -752,9 +788,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -770,9 +807,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -788,9 +826,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -811,9 +850,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -829,9 +869,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -847,9 +888,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -865,9 +907,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -883,9 +926,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -906,9 +950,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -924,9 +969,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -942,9 +988,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -960,9 +1007,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -978,9 +1026,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1001,9 +1050,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1019,9 +1069,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1037,9 +1088,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1055,9 +1107,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1073,9 +1126,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1096,9 +1150,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1114,9 +1169,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1132,9 +1188,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1150,9 +1207,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1168,9 +1226,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1191,9 +1250,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1209,9 +1269,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1227,9 +1288,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1245,9 +1307,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1263,9 +1326,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1286,9 +1350,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1304,9 +1369,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1322,9 +1388,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1340,9 +1407,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1358,9 +1426,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1381,9 +1450,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1399,9 +1469,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1417,9 +1488,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1435,9 +1507,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1453,9 +1526,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1476,9 +1550,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1494,9 +1569,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1512,9 +1588,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1530,9 +1607,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1548,9 +1626,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1571,9 +1650,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1589,9 +1669,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1607,9 +1688,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1625,9 +1707,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1643,9 +1726,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1666,9 +1750,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1689,9 +1774,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1707,9 +1793,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1725,9 +1812,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1743,9 +1831,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1761,9 +1850,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1784,9 +1874,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1802,9 +1893,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1820,9 +1912,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1838,9 +1931,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1856,9 +1950,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1879,9 +1974,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1897,9 +1993,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1915,9 +2012,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1933,9 +2031,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1951,9 +2050,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1974,9 +2074,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -1992,9 +2093,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2010,9 +2112,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2028,9 +2131,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2046,9 +2150,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2069,9 +2174,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2087,9 +2193,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2105,9 +2212,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2123,9 +2231,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2141,13 +2250,214 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
                             <FormLabel>View Manage Student</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <h1 className="text-white text-xs bg-black/80 p-0.5">
+                    STUDENT ATTENDANCE ACCESS
+                  </h1>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                    <FormField
+                      control={form.control}
+                      name="addStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Add Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="viewStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="editStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Edit Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="deleteStudentAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Delete Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="manageTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Manage Student Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <h1 className="text-white text-xs bg-black/80 p-0.5">
+                    TEACHER ATTENDANCE ACCESS
+                  </h1>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                    <FormField
+                      control={form.control}
+                      name="addTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>Add Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="viewTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="editTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Edit Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="deleteTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Delete Teacher Attendance</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="manageTeacherAttendance"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              disabled
+                              className="cursor-not-allowed opacity-50"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel> Manage Teacher Attendance</FormLabel>
                           </div>
                         </FormItem>
                       )}
@@ -2164,9 +2474,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2182,9 +2493,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2200,9 +2512,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2218,9 +2531,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2236,9 +2550,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2259,9 +2574,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2277,9 +2593,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2295,9 +2612,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2313,9 +2631,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2331,9 +2650,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2354,9 +2674,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2372,9 +2693,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2390,9 +2712,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2408,9 +2731,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2426,9 +2750,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2449,9 +2774,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2467,9 +2793,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2485,9 +2812,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2503,9 +2831,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
@@ -2521,9 +2850,10 @@ const DisplayRole = ({initialData}:RoleColumn) => {
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
                             <Checkbox
+                              disabled
                               className="cursor-not-allowed opacity-50"
                               checked={field.value}
-                              
+
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">

@@ -1,9 +1,9 @@
 import Heading from "@/components/heading/Header";
 import { Separator } from "@/components/ui/separator";
-import { currentProfile } from "@/lib/hooks/current-profile"
+import { currentProfile } from "@/lib/helpers/current-profile"
 import { redirect } from "next/navigation";
 import { SessionModal } from "./_component/SessionModal";
-import { currentUserRole } from "@/lib/hooks/getUserRole";
+import { currentUserRole } from "@/lib/helpers/getUserRole";
 import { TableData } from "@/components/tables/table-data";
 import { columns } from "./_component/column";
 import { getAllSessions } from "@/lib/actions/session.actions";

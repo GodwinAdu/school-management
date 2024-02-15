@@ -1,6 +1,6 @@
 "use server"
 
-import { generateCode } from "../hooks/generateCode";
+import { generateCode } from "../helpers/generateCode";
 import Class from "../models/class.models";
 import { connectToDB } from "../mongoose"
 

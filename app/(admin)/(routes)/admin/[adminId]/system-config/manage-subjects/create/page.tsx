@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button"
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { redirect } from "next/navigation";
 import { getAllLevels } from "@/lib/actions/level.actions";
 import { getAllStages } from "@/lib/actions/stage.actions";

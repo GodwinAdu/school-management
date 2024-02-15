@@ -1,5 +1,5 @@
 import Heading from "@/components/heading/Header";
-import { currentProfile } from "@/lib/hooks/current-profile";
+import { currentProfile } from "@/lib/helpers/current-profile";
 import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, PlusCircle } from "lucide-react";

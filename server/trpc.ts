@@ -1,4 +1,4 @@
-import { currentProfile } from '@/lib/hooks/current-profile';
+import { currentProfile } from '@/lib/helpers/current-profile';
 import { TRPCError, initTRPC } from '@trpc/server';
 
 // Avoid exporting the entire t-object
