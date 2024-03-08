@@ -11,37 +11,22 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
 import { Button } from "@/components/ui/button";
-import { AdminUserColumn } from "@/lib/types";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
-import { toast } from "@/components/ui/use-toast";
-import { deleteStudent } from "@/lib/actions/student.actions";
+import { IClass } from "@/lib/models/class.models";
 
 interface CellActionProps {
-  data: AdminUserColumn;
+  data: IClass;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
 
   const router = useRouter();
   const params = useParams();
 
-  const id: string | string[] = params.adminId;
+  const id: string = params.adminId as string;
 
   const { data: value, isLoading } = trpc.getCurrentRole.useQuery(
     { id },
@@ -50,33 +35,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     }
   );
 
-  const handleDeleteStudent = async (id:string) => {
-    try {
-      setLoading(true);
-      await deleteStudent({id})
-      toast({
-        title: "Deleted Successfully",
-        description: "Please Student was deleted successfully...",
-       
-      });
-      router.refresh();
-    } catch (error) {
-      toast({
-        title: "Something Went Wrong",
-        description: "Please try again later",
-        variant: "destructive",
-      });
-    } finally {
-      setOpen(false);
-      setLoading(false);
-    }
-  };
-
-
-
   return (
     <>
-      <DropdownMenu>
+    <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
@@ -85,27 +46,17 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          {value?.viewAdmin && (
-            <Link href={`/admin/${id}/manage-users/manage-student/${data?._id}`}>
-              <DropdownMenuItem >
-              <Eye className="mr-2 h-4 w-4" /> View
-            </DropdownMenuItem>
-            </Link>
-          )}
-          {value?.editAdmin && (
-           <Link href={`/admin/${id}/manage-users/manage-student/${data?._id}/edit`}>
+          {value?.editClassroom && (
+           <Link href={`/admin/${id}/manage-users/manage-student/${data?.stage}`}>
              <DropdownMenuItem >
-              <Edit className="mr-2 h-4 w-4" /> Update
+              <Eye className="mr-2 h-4 w-4" /> Students
             </DropdownMenuItem>
            </Link>
           )}
-          {value?.deleteAdmin && (
-            <DropdownMenuItem onClick={() => handleDeleteStudent(data?._id)}>
-              <Trash className="mr-2 h-4 w-4" /> Delete
-            </DropdownMenuItem>
-          )}
+         
         </DropdownMenuContent>
       </DropdownMenu>
+      
     </>
   );
 };

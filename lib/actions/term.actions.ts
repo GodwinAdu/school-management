@@ -4,47 +4,51 @@ import { revalidatePath } from "next/cache";
 import Term from "../models/term.models";
 import { connectToDB } from "../mongoose"
 
-
-export async function createTerm({name}:{name:string}){
+interface CreateTermProps {
+    name: string;
+    present: boolean | undefined
+}
+export async function createTerm({ name, present }: CreateTermProps) {
     await connectToDB();
 
     try {
         const term = new Term({
-            name
+            name,
+            present
         })
 
         await term.save();
-        
-    } catch (error:any) {
-        console.log("unable to create new term",error)
+
+    } catch (error: any) {
+        console.log("unable to create new term", error)
         throw error;
     }
 }
 
-export async function fetchTermById({id}:{id:string}){
+export async function fetchTermById({ id }: { id: string }) {
     await connectToDB();
     try {
         const term = await Term.findById({
-            _id:id
+            _id: id
         })
 
-        if(!term){
+        if (!term) {
             console.log("term doesnt exist")
         }
         return term;
-    } catch (error:any) {
-        console.log("unable to fetch term",error);
+    } catch (error: any) {
+        console.log("unable to fetch term", error);
         throw error;
     }
 }
 
 
-export async function getAllTerms(){
+export async function getAllTerms() {
 
     await connectToDB();
 
     try {
-        const terms = await Term.find({})
+        const terms = await Term.find({}).lean();
 
         if (!terms || terms.length === 0) {
 
@@ -53,24 +57,17 @@ export async function getAllTerms(){
             return null; // or throw an error if you want to handle it differently
         }
 
-        const serializeTerm = terms.map(term => {
-            return {
-                ...term._doc,
-                _id: term._id.toString()
-            }
-        });
+        return JSON.parse(JSON.stringify(terms));
 
-        return serializeTerm;
-
-    } catch (error:any) {
+    } catch (error: any) {
         console.error("Error fetching terms:", error);
         throw error; // throw the error to handle it at a higher level if needed
     }
 }
 
-interface UpdateTermProps{
-    name:string;
-    createdBy:string;
+interface UpdateTermProps {
+    name: string;
+    createdBy: string;
 }
 
 export async function updateTerm(termId: string, values: UpdateTermProps, path: string) {

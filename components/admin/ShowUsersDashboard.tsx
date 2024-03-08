@@ -1,15 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getAllAdmins } from "@/lib/actions/admin.actions";
-import { getAllStudents } from "@/lib/actions/student.actions";
-import { getAllTeachers } from "@/lib/actions/teacher.actions";
-import { CreditCard, DollarSign, Package, Users } from "lucide-react";
+import {  totalAdmins } from "@/lib/actions/admin.actions";
+import { Users } from "lucide-react";
+import { totalTeachers } from "@/lib/actions/teacher.actions";
+import { totalStudents } from "@/lib/actions/student.actions";
 
-const ShowUsersDashboard = async () => {
+const ShowAccountsDashboard = async () => {
 
-  const allAdmins = await getAllAdmins();
-  const allStudents = await getAllStudents();
-  const allTeachers = await getAllTeachers();
- 
+  const allAdmins = await totalAdmins();
+  const allStudents = await totalStudents()
+
+  const allTeachers = await totalTeachers();
+
 
   return (
     <div className="mx-auto ">
@@ -21,7 +22,7 @@ const ShowUsersDashboard = async () => {
             <Users className="h-5 w-5 font-bold" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{allAdmins?.length || 0}</div>
+            <div className="text-2xl font-bold">{allAdmins || 0}</div>
           </CardContent>
         </Card>
         <Card className="flex flex-col flex-0 w-full bg-white  transition-all duration-200 hover:text-white hover:bg-red-500">
@@ -32,7 +33,7 @@ const ShowUsersDashboard = async () => {
             <Users className="h-5 w-5 font-bold" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{allTeachers?.length || 0}</div>
+            <div className="text-2xl font-bold">{allTeachers|| 0}</div>
           </CardContent>
         </Card>
         <Card className="flex flex-col flex-0 w-full bg-white  transition-all duration-200 hover:text-white hover:bg-red-500">
@@ -40,10 +41,10 @@ const ShowUsersDashboard = async () => {
             <CardTitle className="text-sm font-medium">
               No. of Students
             </CardTitle>
-            <Users className="h-5 w-5 font-bold"  />
+            <Users className="h-5 w-5 font-bold" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{allStudents?.length || 0}</div>
+            <div className="text-2xl font-bold">{allStudents || 0}</div>
           </CardContent>
         </Card>
         <Card className="flex flex-col flex-0 w-full bg-white  transition-all duration-200 hover:text-white hover:bg-red-500">
@@ -51,7 +52,7 @@ const ShowUsersDashboard = async () => {
             <CardTitle className="text-sm font-medium">
               No. of Employees
             </CardTitle>
-            <Users className="h-5 w-5 font-bold"  />
+            <Users className="h-5 w-5 font-bold" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">0</div>
@@ -62,4 +63,4 @@ const ShowUsersDashboard = async () => {
   );
 };
 
-export default ShowUsersDashboard;
+export default ShowAccountsDashboard;

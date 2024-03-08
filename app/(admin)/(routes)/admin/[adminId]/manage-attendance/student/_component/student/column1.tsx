@@ -3,7 +3,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { AdminUserColumn } from "@/lib/types";
 import { useState } from "react";
 import { createAttendance } from "@/lib/actions/student-attendance.actions";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast";
 import { IStudent } from "@/lib/models/student.models";
+import { AttendanceDialog } from "../attendance-modal";
 
 const FormSchema = z.object({
   present: z.boolean().default(false).optional(),
@@ -122,79 +123,7 @@ export const studentColumns1: ColumnDef<IStudent>[] = [
   },
   {
     accessorKey: "",
-    header: "Attendance",
-    cell: ({ row }) => {
-
-      const id = row.original._id;
-      const stage = row.getValue("stage");
-
-      const form = useForm<z.infer<typeof FormSchema>>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: {
-          present: false,
-        },
-      })
-
-      async function onSubmit(data: z.infer<typeof FormSchema>) {
-        try {
-          toast({
-            title: "Marking Attendance",
-            description: "Please wait ... !!!",
-          })
-
-          const mark = await createAttendance({
-            studentId: id,
-            classId:stage as string,
-            present: data.present
-          });
-          
-
-          if (mark?.status === 409) {
-            toast({
-              title: "Attendance Already Taken",
-              description: "Sorry, Today Attendance have been taken already.",
-            })
-          } else {
-            toast({
-              title: "Attendance Marked",
-              description: "Attendance marked successfully",
-            })
-          }
-        } catch (error: any) {
-          toast({
-            title: "Something happened",
-            description: "Please try again later",
-          })
-        }
-      }
-
-      return (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="present"
-              render={({ field }) => (
-                <FormItem className="">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={(value) => {
-                        field.onChange(value);
-                        if (value) {
-                          // Trigger form submission when the checkbox is checked
-                          form.handleSubmit(onSubmit)();
-                        }
-                      }}
-                    />
-                  </FormControl>
-
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      );
-    },
+    header: "View",
+    cell: ({ row }) => <AttendanceDialog />
   },
 ];

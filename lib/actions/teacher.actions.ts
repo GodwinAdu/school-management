@@ -31,8 +31,8 @@ interface CreateTeacherProps {
     accountType: string;
     accountName: string;
     accountNumber: string;
-    stage:string;
-    level:string;
+    stage: string;
+    level: string;
 }
 export async function createTeacher(formData: CreateTeacherProps, path: string) {
     await connectToDB();
@@ -63,8 +63,8 @@ export async function createTeacher(formData: CreateTeacherProps, path: string) 
             accountType: formData.accountType,
             accountName: formData.accountName,
             accountNumber: formData.accountNumber,
-            level:formData.level,
-            stage:formData.stage
+            level: formData.level,
+            stage: formData.stage
         })
 
         await teacher.save();
@@ -75,26 +75,26 @@ export async function createTeacher(formData: CreateTeacherProps, path: string) 
     }
 }
 
-interface FetchTeacherProps{
-    id:string
+interface FetchTeacherProps {
+    id: string
 }
 
-export async function fetchTeacher({id}:FetchTeacherProps){
+export async function fetchTeacher({ id }: FetchTeacherProps) {
     await connectToDB();
     try {
-        const user = await Teacher.findById({_id:id});
+        const user = await Teacher.findById({ _id: id });
 
-        if(!user){
+        if (!user) {
             console.log("user doesnt exist")
             return null
         }
-        
-       // Exclude sensitive information like password
-    const { password, ...userWithoutPassword } = user.toObject();
-    return userWithoutPassword;
-    
-    } catch (error:any) {
-        console.log("Unable to fetch user",error)
+
+        // Exclude sensitive information like password
+        const { password, ...userWithoutPassword } = user.toObject();
+        return userWithoutPassword;
+
+    } catch (error: any) {
+        console.log("Unable to fetch user", error)
     }
 }
 
@@ -185,6 +185,20 @@ export async function updateTeacher(teacherId: string, values: Partial<CreateTea
         return updatedTeacher;
     } catch (error) {
         console.error("Error updating teacher:", error);
+        throw error;
+    }
+}
+
+
+export async function totalTeachers() {
+    await connectToDB();
+    try {
+        const totalMembers = await Teacher.countDocuments({});
+
+        return totalMembers
+
+    } catch (error) {
+        console.log("unable to count teachers", error);
         throw error;
     }
 }

@@ -5,10 +5,9 @@ import { CellAction } from "./cell-action";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { IClass } from "@/lib/models/class.models";
+import { AdminUserColumn } from "@/lib/types";
 
-
-export const columns: ColumnDef<IClass>[] = [
+export const columns: ColumnDef<AdminUserColumn>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -32,15 +31,28 @@ export const columns: ColumnDef<IClass>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "firstName",
     header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("firstName")}</div>
+    ),
   },
   {
-    accessorKey: "code",
-    header: "Code",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("code")}</div>,
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Email
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
+
   {
     accessorKey: "level",
     header: "Level",
@@ -59,20 +71,20 @@ export const columns: ColumnDef<IClass>[] = [
 
       if (level === "Primary") {
         renderedStage = `Class ${stage}`;
-      } else if (level === "Junior") {
-        if (typeof stage === "string" && stage?.startsWith("jhs-")) {
+      } else if (level === "Junior high") {
+        if (typeof stage === "string" && stage?.startsWith("hs-")) {
           const jhsNumber = stage?.split("-")[1];
           renderedStage = `JHS ${jhsNumber}`;
         } else {
           renderedStage = `Unknown Stage `; // Handle other cases if needed
-        };;
+        }
       } else if (level === "Secondary") {
         if (typeof stage === "string" && stage?.startsWith("shs-")) {
           const shsNumber = stage?.split("-")[1];
           renderedStage = `SHS ${shsNumber}`;
         } else {
           renderedStage = `Unknown Stage `; // Handle other cases if needed
-        };;
+        }
       } else {
         renderedStage = `Unknown ${stage}`; // Handle other cases if needed
       }
@@ -80,7 +92,6 @@ export const columns: ColumnDef<IClass>[] = [
       return <div className="capitalize">{renderedStage}</div>;
     },
   },
-
   {
     id: "actions",
     enableHiding: false,

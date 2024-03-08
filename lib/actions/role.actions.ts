@@ -204,7 +204,7 @@ export async function fetchRole({ value }: { value: string }) {
         return JSON.parse(JSON.stringify(role))
     } catch (error: any) {
         console.error("Error fetching roles by display name:", error);
-        throw error; // throw the error to handle it at a higher level if needed
+        throw error; 
     }
 }
 
@@ -224,7 +224,7 @@ export async function fetchRoleById({ id }: { id: string }) {
 
     } catch (error: any) {
         console.error("Error fetching role by id:", error);
-        throw error; // throw the error to handle it at a higher level if needed
+        throw error;
     }
 }
 
@@ -242,7 +242,7 @@ export async function getAllRoles() {
 
     } catch (error) {
         console.error("Error fetching roles:", error);
-        throw error; // throw the error to handle it at a higher level if needed
+        throw error;
     }
 }
 export async function getRolesName() {
@@ -260,7 +260,7 @@ export async function getRolesName() {
 
     } catch (error) {
         console.error("Error fetching roles name:", error);
-        throw error; // throw the error to handle it at a higher level if needed
+        throw error;
     }
 }
 
@@ -279,7 +279,7 @@ export async function deleteUserRole({ id }: { id: string }) {
         return JSON.parse(JSON.stringify(deleteRole));
     } catch (error) {
         console.error("Error deleting role:", error);
-        throw error; // throw the error to handle it at a higher level if needed
+        throw error; 
     }
 
 }

@@ -17,6 +17,8 @@ const page = async () => {
 
   const data = (await getAllTerms()) || [];
 
+  console.log(data,"data")
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -24,7 +26,7 @@ const page = async () => {
           title="Manage Terms"
           description="Manage,create and edit school terms"
         />
-        {role.addTerm && <ModalTerm />}
+        {role?.addTerm && <ModalTerm />}
       </div>
       <Separator />
       <TableData searchKey="name" columns={columns} data={data} />

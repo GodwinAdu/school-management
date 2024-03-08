@@ -8,8 +8,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { columns } from "./_component/column"
 import { DataTable } from "@/components/tables/data-table"
-import { getAllStudents } from "@/lib/actions/student.actions"
-
+import { getAllClasses } from "@/lib/actions/class.actions"
 
 const page = async () => {
 
@@ -17,7 +16,7 @@ const page = async () => {
 
   if(!user) redirect("/")
 
-  const data = await getAllStudents() || [];
+  const data = await getAllClasses() || [];
   
   return (
     <>
@@ -34,4 +33,5 @@ const page = async () => {
   )
 }
 
-export default page
+export default page;
+

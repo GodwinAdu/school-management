@@ -7,13 +7,11 @@ const currentDate = new Date();
 
 interface GetStudentAttendanceProps {
     classId: string;
-    searchDate: Date;
+    searchDate: string;
 }
 
 export async function getStudentAttendances({ classId, searchDate }: GetStudentAttendanceProps) {
     try {
-        // Convert searchDate to UTC format if it exists; otherwise, use the current date
-        const queryDate = searchDate ? searchDate : new Date();
 
         // Find all students with the specified class ID
         const students = await Student.find({ stage: classId });
@@ -23,11 +21,12 @@ export async function getStudentAttendances({ classId, searchDate }: GetStudentA
         // Find attendance records for the current date and class ID
         const attendanceRecords = await StudentAttendance.find({
             $and: [
-                { date: { $eq: queryDate } }, // Match documents with the target date
+                { date: { $eq: searchDate} }, // Match documents with the target date
                 { classId } // Match documents with the specified classId
             ]
         });
         console.log(attendanceRecords)
+        console.log(searchDate,"searchDate")
 
         // if (!attendanceRecords || attendanceRecords.length === 0) {
         //     throw new Error("Attendance not marked yet for the specified date and class");

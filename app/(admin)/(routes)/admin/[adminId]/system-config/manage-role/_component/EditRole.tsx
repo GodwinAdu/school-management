@@ -50,7 +50,7 @@ const EditRole = ({ initialData }: EditRoleProps) => {
     resolver: zodResolver(CreateRoleSchema),
     defaultValues: initialData || defaultValues
   });
-  
+
   const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
@@ -348,24 +348,7 @@ const EditRole = ({ initialData }: EditRoleProps) => {
                     />
                     <FormField
                       control={form.control}
-                      name="salaryAndPayment"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value}
-                              onCheckedChange={field.onChange}
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel>View Salary & Payment</FormLabel>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="feesAndPayment"
+                      name="account"
                       render={({ field }) => (
                         <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
                           <FormControl>
@@ -2319,6 +2302,23 @@ const EditRole = ({ initialData }: EditRoleProps) => {
                     SALARY STRUCTURE ACCESS
                   </h1>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                  <FormField
+                      control={form.control}
+                      name="salaryAndPayment"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Salary & Payment</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
                     <FormField
                       control={form.control}
                       name="addSalaryStructure"
@@ -2409,6 +2409,23 @@ const EditRole = ({ initialData }: EditRoleProps) => {
                     SALARY PAYMENT ACCESS
                   </h1>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 py-3">
+                  <FormField
+                      control={form.control}
+                      name="feesAndPayment"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0  p-4">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>View Fees & Payment</FormLabel>
+                          </div>
+                        </FormItem>
+                      )}
+                    />
                     <FormField
                       control={form.control}
                       name="addSalaryPayment"

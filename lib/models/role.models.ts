@@ -12,6 +12,7 @@ export interface IRole extends Document {
     systemConfig: boolean;
     frontendManagement: boolean;
     manageUsers: boolean;
+    account:boolean;
     transferStudent: boolean;
     manageAttendance: boolean;
     manageTimeTable: boolean;
@@ -213,6 +214,10 @@ const RoleSchema = new mongoose.Schema({
         default: false
     },
     salaryAndPayment: {
+        type: Boolean,
+        default: false
+    },
+    account: {
         type: Boolean,
         default: false
     },

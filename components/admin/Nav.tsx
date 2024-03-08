@@ -18,7 +18,7 @@ import React, { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { RoleColumn, SideNavItem } from "@/lib/types";
+import { SideNavItem } from "@/lib/types";
 import {
   BadgeHelp,
   Book,
@@ -43,15 +43,18 @@ import { IconBadge } from "../ui/icon-badge";
 import { IRole } from "@/lib/models/role.models";
 
 type NavProps = {
-  userRole:IRole
+  userRole: IRole
 }
 
-const Nav = ({ userRole }:NavProps) => {
+const Nav = ({ userRole }: NavProps) => {
+
   const params = useParams();
+
   const pathname = usePathname();
+
   const [open, setOpen] = useState(0);
 
-  const handleOpen = (value:any) => {
+  const handleOpen = (value: any) => {
     setOpen(open === value ? 0 : value);
   };
   // const [subMenuOpen, setSubMenuOpen] = useState<{ [key: number]: boolean }>({});
@@ -62,7 +65,7 @@ const Nav = ({ userRole }:NavProps) => {
   //     [index]: !subMenuOpen[index],
   //   });
   // };
-  const id = params.adminId;
+  const id = params.adminId as string;
 
   const SIDENAV_ITEMS: SideNavItem[] = [
     {
@@ -173,7 +176,7 @@ const Nav = ({ userRole }:NavProps) => {
           roleField: "manageSchoolBanner",
           path: `/admin/${id}/frontend-display/school-banners`,
         },
-        
+
       ],
     },
     {
@@ -188,19 +191,19 @@ const Nav = ({ userRole }:NavProps) => {
           roleField: "manageAdmin",
           path: `/admin/${id}/manage-users/manage-admin`,
         },
-       
+
         {
           title: "manage Teachers",
           roleField: "manageTeacher",
           path: `/admin/${id}/manage-users/manage-teacher`,
         },
-        
+
         {
           title: "manage Students",
           roleField: "manageStudent",
           path: `/admin/${id}/manage-users/manage-student`,
         },
-        
+
       ],
     },
     {
@@ -226,7 +229,7 @@ const Nav = ({ userRole }:NavProps) => {
           roleField: "manageTeacherAttendance",
           path: `/admin/${id}/manage-attendance/teacher`,
         },
-        
+
       ],
     },
     {
@@ -274,12 +277,17 @@ const Nav = ({ userRole }:NavProps) => {
       ],
     },
     {
-      title: "Salary & payments",
+      title: "Account",
       path: "",
       icon: <IconBadge size="sm" icon={DollarSignIcon} />,
-      roleField: "salaryAndPayment",
+      roleField: "account",
       submenu: true,
       subMenuItems: [
+        {
+          title: "overview",
+          // roleField: "salaryStructure",
+          path: `/admin/${id}/account/overview`,
+        },
         {
           title: "Salary Structure",
           roleField: "salaryStructure",
@@ -287,18 +295,9 @@ const Nav = ({ userRole }:NavProps) => {
         },
         {
           title: "Salary payments",
-          // roleField: "salaryPayment",
+          roleField: "salaryAndPayment",
           path: `/admin/${id}/salary-payments/salary-payment`,
         },
-      ],
-    },
-    {
-      title: "Fees & Payment",
-      path: "",
-      icon: <IconBadge size="sm" icon={DollarSign} />,
-      roleField: "feesAndPayment",
-      submenu: true,
-      subMenuItems: [
         {
           title: "individual fees payment",
           // roleField: "individualFess",
@@ -352,7 +351,7 @@ const Nav = ({ userRole }:NavProps) => {
 
   const filteredItems = SIDENAV_ITEMS.filter((item) => {
     if (item.roleField && item.roleField !== "help") {
-      return userRole && userRole[item?.roleField  as keyof IRole];
+      return userRole && userRole[item?.roleField as keyof IRole];
     }
 
     return true;
@@ -360,7 +359,7 @@ const Nav = ({ userRole }:NavProps) => {
     if (mainItem.subMenuItems) {
       const filteredSubItems = mainItem.subMenuItems.map((subItem) => ({
         ...subItem,
-        visible: !subItem.roleField || userRole[subItem.roleField  as keyof IRole],
+        visible: !subItem.roleField || userRole[subItem.roleField as keyof IRole],
       }));
 
       // Include the main item only if there are accessible sub-menu items
@@ -371,7 +370,7 @@ const Nav = ({ userRole }:NavProps) => {
     return mainItem;
   });
 
- 
+
   return (
     <div className="">
       <div className=" h-screen p-4 shadow-xl shadow-blue-gray-900/5 custom-scrollbar sticky left-0 top-0 z-50 flex flex-col overflow-auto border-r ">
@@ -390,9 +389,8 @@ const Nav = ({ userRole }:NavProps) => {
                     open={open === index + 1}
                     icon={
                       <ChevronDownIcon
-                        className={`mx-auto h-4 w-4 transition-transform ${
-                          open === index + 1 ? "rotate-180" : ""
-                        }`}
+                        className={`mx-auto h-4 w-4 transition-transform ${open === index + 1 ? "rotate-180" : ""
+                          }`}
                       />
                     }
                   >

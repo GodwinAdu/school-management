@@ -1,12 +1,5 @@
 "use client"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
@@ -20,10 +13,8 @@ import { Calendar } from "@/components/ui/calendar"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from "@/components/ui/form"
 import {
@@ -32,12 +23,10 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { toast } from "@/components/ui/use-toast"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { studentColumns1 } from "./student/column1";
 import { IStudent } from "@/lib/models/student.models";
-import { TableData } from "@/components/tables/table-data";
 import { DataTable } from "@/components/tables/data-table";
-import { trpc } from "@/app/_trpc/client";
 import { getStudentAttendances } from "@/lib/helpers/attendance";
 
 
@@ -47,19 +36,48 @@ const FormSchema = z.object({
     }),
 })
 
-const GetAttendance = ({classId}:{classId:string}) => {
+const GetAttendance = ({ classId }: { classId: string }) => {
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
     const [present, setPresent] = useState<IStudent[]>([])
     const [absent, setAbsent] = useState<IStudent[]>([])
-    const [ loading, setLoading ] =  useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const { data: value, isLoading } = trpc.getStudentAttendance.useQuery(
-        {classId},
-        {
-          refetchInterval: (value) => (value ? false : 500),
-        }
-      );
-      console.log(value?.presentStudents,"values");
+    useEffect(() => {
+        const fetchData = async () => {
+            const queryDate = new Date(currentDate); // Create a new Date object from currentDate
+            queryDate.setUTCHours(0,0,0,0); // Set the time components to midnight
+            console.log(queryDate.toISOString(), "query"); // Log the ISO string representation
+            try {
+
+                const data = await getStudentAttendances({
+                    classId,
+                    searchDate:queryDate.toISOString(),
+                });
+
+                setPresent(data?.presentStudents);
+                setAbsent(data?.absentStudents);
+
+            } catch (error) {
+                // Handle errors
+                console.error('Error fetching data:', error);
+                toast({
+                    title: "Something went wrong",
+                    description: "Please reload to fetch default attendance",
+                    variant: "destructive"
+                });
+            }
+        };
+
+        fetchData();
+
+        // No cleanup needed in this case, so no return statement
+
+    }, [classId, currentDate]);
+
+    console.log(absent,"absent")
+    console.log(present,"present")
+ 
+
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -67,16 +85,17 @@ const GetAttendance = ({classId}:{classId:string}) => {
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
-           setLoading(true)
-           const attendanceData = await getStudentAttendances({
-            classId,
-            searchDate:data.searchDate
-           })
-           setPresent(attendanceData?.presentStudents)
-           setAbsent(attendanceData?.absentStudents)
-           setLoading(false)
+            setLoading(true)
+            console.log(data.searchDate)
+            const attendanceData = await getStudentAttendances({
+                classId,
+                searchDate: data.searchDate.toISOString(),
+            })
+            setPresent(attendanceData?.presentStudents)
+            setAbsent(attendanceData?.absentStudents)
+            setLoading(false)
 
-        } catch (error:any) {
+        } catch (error: any) {
             setLoading(false)
             toast({
                 title: "Something went wrong",
@@ -86,7 +105,7 @@ const GetAttendance = ({classId}:{classId:string}) => {
                     </pre>
                 ),
             });
-        }   
+        }
     }
 
     return (
@@ -140,36 +159,26 @@ const GetAttendance = ({classId}:{classId:string}) => {
                 </form>
             </Form>
             <div className="space-y-1">
-                <Card>
-                    <CardContent className="space-y-2">
+
+                <Tabs defaultValue="present" className=" w-full ">
+                    <TabsList className="grid w-full max-w-lg grid-cols-4 ">
+                        <TabsTrigger value="present">Presents</TabsTrigger>
+                        <TabsTrigger value="absent">Absents</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="present">
+
                         <div className="space-y-1">
-                            <Tabs defaultValue="present" className=" w-full ">
-                                <TabsList className="grid w-full max-w-lg grid-cols-4 ">
-                                    <TabsTrigger value="present">Presents</TabsTrigger>
-                                    <TabsTrigger value="absent">Absents</TabsTrigger>
-                                </TabsList>
-                                <TabsContent value="present">
-                                    <Card>
-                                        <CardContent className="space-y-1">
-                                            <div className="space-y-1">
-                                                <DataTable searchKey="firstName" columns={studentColumns1} data={present ? present : value?.presentStudents} />
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </TabsContent>
-                                <TabsContent value="absent">
-                                    <Card>
-                                        <CardContent className="space-y-1">
-                                            <div className="space-y-1">
-                                                <DataTable searchKey="firstName" columns={studentColumns1} data={absent ? absent : value?.absentStudents} />
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                </TabsContent>
-                            </Tabs>
+                            <DataTable searchKey="firstName" columns={studentColumns1} data={present} />
                         </div>
-                    </CardContent>
-                </Card>
+
+                    </TabsContent>
+                    <TabsContent value="absent">
+
+                        <div className="space-y-1">
+                            <DataTable searchKey="firstName" columns={studentColumns1} data={absent} />
+                        </div>
+                    </TabsContent>
+                </Tabs>
             </div>
         </>
     );

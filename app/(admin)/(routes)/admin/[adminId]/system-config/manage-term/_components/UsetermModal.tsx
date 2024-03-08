@@ -31,44 +31,48 @@ import { PlusCircle } from "lucide-react";
 import { createTerm } from "@/lib/actions/term.actions";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "name must be at least 2 characters.",
   }),
+  present: z.boolean().optional(),
 });
 
 export function ModalTerm() {
-    const router = useRouter();
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      present: false
     },
   });
 
-  const  {isSubmitting} = form.formState;
+  const { isSubmitting } = form.formState;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-        await createTerm({
-            name:values.name
-        })
-        router.refresh();
-        form.reset();
-        toast({
-            title: "New term created",
-            description: "New term was added successfully...",
-          });
-    } catch (error:any) {
-        console.log("error happened while creating term",error)
-        toast({
-            title: "Somethin went wrong",
-            description: "Please try again later...",
-            variant: "destructive",
-          });
+      await createTerm({
+        name: values.name,
+        present: values.present
+      })
+      router.refresh();
+      form.reset();
+      toast({
+        title: "New term created",
+        description: "New term was added successfully...",
+      });
+    } catch (error: any) {
+      console.log("error happened while creating term", error)
+      toast({
+        title: "Somethin went wrong",
+        description: "Please try again later...",
+        variant: "destructive",
+      });
     }
   }
 
@@ -97,16 +101,35 @@ export function ModalTerm() {
                   <FormItem>
                     <FormLabel>Enter Term Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Term or Semister" {...field} />
+                      <Input disabled={isSubmitting} placeholder="Enter Term or Semister" {...field} />
                     </FormControl>
                     <FormDescription>
-                      It can be a term or a semister. eg.first term or semister 1.
+                      It can be a term or a semister. eg.first term <br /> or semister 1.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <FormField
+                control={form.control}
+                name="present"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Present</FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Creating..." : "Create"}
+              </Button>
             </form>
           </Form>
         </div>

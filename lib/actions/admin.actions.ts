@@ -139,3 +139,16 @@ export async function updateAdmin(adminId: string, values: Partial<CreateAdminPr
         throw error;
     }
 }
+
+export async function totalAdmins() {
+    await connectToDB();
+    try {
+        const totalMembers = await Adminuser.countDocuments({});
+
+        return totalMembers
+
+    } catch (error) {
+        console.log("unable to count AdminUsers", error);
+        throw error;
+    }
+}

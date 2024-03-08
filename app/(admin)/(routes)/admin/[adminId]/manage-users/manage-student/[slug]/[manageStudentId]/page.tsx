@@ -10,12 +10,13 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const page = async ({ params }: { params: { adminId: string, manageStudentId:string } }) => {
+const page = async ({ params }: { params: { adminId: string,slug:string, manageStudentId:string } }) => {
   const user = await currentProfile();
 
   if (!user) redirect("/");
 
   const pathId = params.adminId;
+  const stage = params.slug;
   const studentDetailId = params.manageStudentId
 
   const student = await fetchStudent({id: studentDetailId});
@@ -29,7 +30,7 @@ const page = async ({ params }: { params: { adminId: string, manageStudentId:str
           description={`${student?.firstName} ${student?.lastName} ${student?.middleName && student?.middleName } particulars`}
         />
         <Link
-          href={`/admin/${pathId}/manage-users/manage-student`}
+          href={`/admin/${pathId}/manage-users/manage-student/${stage}`}
           className={cn(buttonVariants())}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

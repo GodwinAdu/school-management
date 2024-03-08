@@ -1,5 +1,4 @@
-import z from "zod"
-
+import z from "zod";
 
 export const CreateRoleSchema = z.object({
     name: z.string().min(2, {
@@ -23,6 +22,7 @@ export const CreateRoleSchema = z.object({
     manageTimeTable: z.boolean().optional(),
     repeatStudent: z.boolean().optional(),
     examsManagement: z.boolean().optional(),
+    account: z.boolean().optional(),
     salaryAndPayment: z.boolean().optional(),
     feesAndPayment: z.boolean().optional(),
     library: z.boolean().optional(),

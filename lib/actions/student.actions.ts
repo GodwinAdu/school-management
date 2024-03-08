@@ -92,17 +92,18 @@ export async function fetchStudent({id}:FetchAdminProps){
     }
 }
 
-export async function getAllStudents() {
+export async function getAllStudentsByStage({stage}:{stage:string}) {
     await connectToDB();
     try {
 
-        const students = await Student.find({})
+        const students = await Student.find({stage});
+
         if (!students) {
             console.log("Cant find Students")
-            return
+            return []
         }
 
-        return students;
+        return JSON.parse(JSON.stringify(students));
 
     } catch (error: any) {
         console.log("unable to fetch Student users", error)
@@ -175,6 +176,19 @@ export async function updateStudent(studentId: string, values: Partial<CreateStu
         return updatedStudent;
     } catch (error) {
         console.error("Error updating Student:", error);
+        throw error;
+    }
+}
+
+export async function totalStudents() {
+    await connectToDB();
+    try {
+        const totalMembers = await Student.countDocuments({});
+
+        return totalMembers
+
+    } catch (error) {
+        console.log("unable to count Students", error);
         throw error;
     }
 }
